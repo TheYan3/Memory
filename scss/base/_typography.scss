@@ -1,0 +1,25 @@
+// base/_typography.scss
+$sizes: (
+  s:  8px,
+  m:  16px,
+  l:  24px,
+);
+
+@each $name, $size in $sizes {
+  .text-#{$name} { font-size: $size; }
+}
+
+$spacings: (
+  xs:  4px,
+  s:   8px,
+  m:   16px,
+  l:   24px,
+  xl:  32px,
+  xxl: 48px,
+);
+
+@each $name, $size in $spacings {
+  .p-#{$name}  { padding: $size; }
+  .px-#{$name} { padding-left: $size; padding-right: $size; }
+  .py-#{$name} { padding-top: $size;  padding-bottom: $size; }
+}
