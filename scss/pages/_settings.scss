@@ -2,18 +2,17 @@
 
 #settings {
   background-color: a.$color-white;
-  min-height: 100vh;
-  padding: a.px-to-rem(48) a.px-to-rem(40);
-  display: flex;
   flex-direction: column;
+  padding: a.px-to-rem(32) a.px-to-rem(40);
 
   @include a.respond('lg') {
-    padding: a.px-to-rem(56) a.px-to-rem(80);
+    padding: a.px-to-rem(36) a.px-to-rem(80);
   }
 }
 
 .settings__header {
-  margin-bottom: a.px-to-rem(40);
+  margin-bottom: a.px-to-rem(20);
+  flex-shrink: 0;
 }
 
 .settings__title {
@@ -34,19 +33,21 @@
 .settings__body {
   display: grid;
   grid-template-columns: 1fr;
-  gap: a.px-to-rem(48);
+  gap: a.px-to-rem(32);
   flex: 1;
+  min-height: 0;
 
   @include a.respond('md') {
     grid-template-columns: 5fr 4fr;
-    gap: a.px-to-rem(64);
+    gap: a.px-to-rem(48);
   }
 }
 
 .settings__left {
   display: flex;
   flex-direction: column;
-  gap: a.px-to-rem(32);
+  gap: a.px-to-rem(16);
+  overflow: hidden;
 }
 
 .settings__group {
@@ -59,7 +60,7 @@
   display: flex;
   align-items: center;
   gap: a.px-to-rem(10);
-  margin-bottom: a.px-to-rem(8);
+  margin-bottom: a.px-to-rem(4);
 }
 
 .settings__group-icon {
@@ -92,7 +93,7 @@
   display: flex;
   align-items: center;
   gap: a.px-to-rem(12);
-  padding: a.px-to-rem(12) 0;
+  padding: a.px-to-rem(8) 0;
   cursor: pointer;
   border-bottom: 1px solid rgba(a.$color-primary-dark, 0.08);
   user-select: none;
@@ -136,6 +137,7 @@
 .settings__right {
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .settings__preview-bar {
@@ -148,6 +150,7 @@
   padding: a.px-to-rem(10) a.px-to-rem(16);
   border-radius: a.px-to-rem(8) a.px-to-rem(8) 0 0;
   font-size: a.px-to-rem(13);
+  flex-shrink: 0;
 }
 
 .settings__preview-scores {
@@ -185,7 +188,10 @@
 }
 
 .settings__preview-img {
+  flex: 1;
   width: 100%;
+  min-height: 0;
+  object-fit: contain;
   display: block;
   border: 1px solid rgba(a.$color-primary-dark, 0.1);
   border-top: none;
@@ -198,9 +204,10 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: a.px-to-rem(16);
-  margin-top: a.px-to-rem(40);
-  padding-top: a.px-to-rem(24);
+  margin-top: a.px-to-rem(20);
+  padding-top: a.px-to-rem(16);
   border-top: 1px solid rgba(a.$color-primary-dark, 0.1);
+  flex-shrink: 0;
 }
 
 .settings__breadcrumb {

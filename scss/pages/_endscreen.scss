@@ -1,0 +1,133 @@
+@use '../abstracts/main' as a;
+
+#gameover {
+  background-color: var(--theme-bg, #{a.$color-primary-dark});
+  color: var(--theme-text, #{a.$color-white});
+  align-items: center;
+  justify-content: center;
+}
+
+.gameover__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: a.px-to-rem(24);
+  text-align: center;
+}
+
+.gameover__headline {
+  font-size: a.px-to-rem(80);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--theme-accent, #{a.$color-accent-code-vibes});
+  text-shadow: 0 0 a.px-to-rem(40) var(--theme-accent, #{a.$color-accent-code-vibes});
+}
+
+.gameover__label {
+  font-size: a.px-to-rem(20);
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.gameover__scores {
+  display: flex;
+  align-items: center;
+  gap: a.px-to-rem(12);
+}
+
+.gameover__score {
+  font-size: a.px-to-rem(28);
+  font-weight: 800;
+  min-width: a.px-to-rem(32);
+  text-align: center;
+}
+
+// ── Endscreen (Winner / Draw) ─────────────────────────────────────────────────
+
+@keyframes slideInTop {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+#endscreen {
+  background-color: var(--theme-bg, #{a.$color-primary-dark});
+  color: var(--theme-text, #{a.$color-white});
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &:not(.is-hidden) {
+    animation: slideInTop 0.5s ease-out both;
+  }
+}
+
+.endscreen__confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.endscreen__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: a.px-to-rem(28);
+  position: relative;
+  z-index: 1;
+}
+
+.endscreen__label {
+  font-size: a.px-to-rem(22);
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.endscreen__winner {
+  font-size: a.px-to-rem(52);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+
+  &--blue   { color: a.$color-player-blue; }
+  &--orange { color: a.$color-player-orange; }
+}
+
+.endscreen__icon {
+  width: a.px-to-rem(80);
+  height: a.px-to-rem(80);
+  color: var(--theme-accent, #{a.$color-accent-code-vibes});
+
+  &--blue   { color: a.$color-player-blue; }
+  &--orange { color: a.$color-player-orange; }
+
+  svg { width: 100%; height: 100%; }
+}
+
+.endscreen__draw {
+  font-size: a.px-to-rem(72);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--theme-accent, #{a.$color-accent-code-vibes});
+  text-shadow: 0 0 a.px-to-rem(40) var(--theme-accent, #{a.$color-accent-code-vibes});
+}
+
+.endscreen__btn {
+  background-color: var(--theme-accent, #{a.$color-accent-code-vibes});
+  color: a.$color-white;
+  border: none;
+  padding: a.px-to-rem(14) a.px-to-rem(36);
+  border-radius: a.px-to-rem(8);
+  font-size: a.px-to-rem(16);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover { opacity: 0.82; }
+}
