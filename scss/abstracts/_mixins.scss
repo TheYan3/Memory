@@ -1,24 +1,16 @@
-// abstracts/_mixins.scss
+@use 'sass:map';
+
 $breakpoints: (
-  zero: 0px,
-  sm:   480px,
-  md:   768px,
-  lg:   992px,
-  xl:   1200px,
-  xxl:  1400px
+  'zero': 0px,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  'xxl': 1440px,
 );
 
-@mixin respond($minsize: zero, $maxsize: null) {
-  $min: map-get($breakpoints, $minsize);
-
-  @if $maxsize == null {
-    @media screen and (min-width: #{$min}) {
-      @content;
-    }
-  } @else {
-    $max: map-get($breakpoints, $maxsize);
-    @media screen and (min-width: #{$min}) and (max-width: #{$max}) {
-      @content;
-    }
+@mixin respond($size) {
+  @media (min-width: map.get($breakpoints, $size)) {
+    @content;
   }
 }

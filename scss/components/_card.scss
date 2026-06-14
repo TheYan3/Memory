@@ -1,0 +1,33 @@
+@use '../abstracts/main' as a;
+
+.card {
+  width: a.px-to-rem(100);
+  height: a.px-to-rem(100);
+  background-color: transparent;
+  border: none;
+  aspect-ratio: 1 / 1;
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &__face {
+    position: absolute;
+    inset: 0;
+    background-color: a.$color-primary-dark;
+    backface-visibility: hidden;
+
+    &--back {
+      transform: rotateY(180deg);
+      background-color: red;
+    }
+  }
+
+  &.is-flipped &__inner {
+    transform: rotateY(180deg);
+  }
+}
