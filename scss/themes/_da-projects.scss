@@ -4,8 +4,7 @@
   --theme-bg:            #{a.$color-white};
   --theme-accent:        #{a.$color-accent-da-projects};
   --theme-text:          #{a.$color-primary-dark};
-  // TODO: replace once da-projects/back.svg is exported from Figma
-  --theme-card-back:     none;
+  --theme-card-back:     url('/assets/img/Theme_DA/Face.svg');
   --theme-exit-btn-color: #{a.$color-accent-da-projects};
   --theme-separator:      #{rgba(a.$color-primary-dark, 0.10)};
 }

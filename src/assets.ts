@@ -5,7 +5,6 @@ export interface ThemeAssets {
   motifs: string[];
 }
 
-// Code Vibes – 18 motifs available (Figma export naming: Card_Picture.svg + Card_Picture (1–17).svg)
 const codeVibesMotifs: string[] = [
   '/assets/img/Theme_Code_Vibes/Card_Picture.svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (1).svg',
@@ -27,7 +26,7 @@ const codeVibesMotifs: string[] = [
   '/assets/img/Theme_Code_Vibes/Card_Picture (17).svg',
 ];
 
-// Gaming – 15 motifs available; entries 16–18 are placeholders pending Figma export
+// 17 motifs available; Picture_Gaming (18).svg pending Figma export – 6×6 board unsupported for this theme
 const gamingMotifs: string[] = [
   '/assets/img/Theme_Gaming/Picture_Gaming (1).svg',
   '/assets/img/Theme_Gaming/Picture_Gaming (2).svg',
@@ -44,20 +43,51 @@ const gamingMotifs: string[] = [
   '/assets/img/Theme_Gaming/Picture_Gaming (13).svg',
   '/assets/img/Theme_Gaming/Picture_Gaming (14).svg',
   '/assets/img/Theme_Gaming/Picture_Gaming (15).svg',
-  '/assets/img/Theme_Gaming/Picture_Gaming (16).svg', // TODO: placeholder – export from Figma
-  '/assets/img/Theme_Gaming/Picture_Gaming (17).svg', // TODO: placeholder – export from Figma
-  '/assets/img/Theme_Gaming/Picture_Gaming (18).svg', // TODO: placeholder – export from Figma
+  '/assets/img/Theme_Gaming/Picture_Gaming (16).svg',
+  '/assets/img/Theme_Gaming/Picture_Gaming (17).svg',
 ];
 
-// DA Projects – all 18 entries are placeholders pending Figma export
-const daProjectsMotifs: string[] = Array.from({ length: 18 },
-  (_, i) => `/assets/img/da-projects/${String(i + 1).padStart(2, '0')}.svg`,
-);
+const daProjectsMotifs: string[] = [
+  '/assets/img/Theme_DA/Back_DA (1).svg',
+  '/assets/img/Theme_DA/Back_DA (2).svg',
+  '/assets/img/Theme_DA/Back_DA (3).svg',
+  '/assets/img/Theme_DA/Back_DA (4).svg',
+  '/assets/img/Theme_DA/Back_DA (5).svg',
+  '/assets/img/Theme_DA/Back_DA (6).svg',
+  '/assets/img/Theme_DA/Back_DA (7).svg',
+  '/assets/img/Theme_DA/Back_DA (8).svg',
+  '/assets/img/Theme_DA/Back_DA (9).svg',
+  '/assets/img/Theme_DA/Back_DA (10).svg',
+  '/assets/img/Theme_DA/Back_DA (11).svg',
+  '/assets/img/Theme_DA/Back_DA (12).svg',
+  '/assets/img/Theme_DA/Back_DA (13).svg',
+  '/assets/img/Theme_DA/Back_DA (14).svg',
+  '/assets/img/Theme_DA/Back_DA (15).svg',
+  '/assets/img/Theme_DA/Back_DA (16).svg',
+  '/assets/img/Theme_DA/Back_DA (17).svg',
+  '/assets/img/Theme_DA/Back_DA (18).svg',
+];
 
-// Foods – all 18 entries are placeholders pending Figma export
-const foodsMotifs: string[] = Array.from({ length: 18 },
-  (_, i) => `/assets/img/foods/${String(i + 1).padStart(2, '0')}.svg`,
-);
+const foodsMotifs: string[] = [
+  '/assets/img/Theme_Food/Back_Food (1).svg',
+  '/assets/img/Theme_Food/Back_Food (2).svg',
+  '/assets/img/Theme_Food/Back_Food (3).svg',
+  '/assets/img/Theme_Food/Back_Food (4).svg',
+  '/assets/img/Theme_Food/Back_Food (5).svg',
+  '/assets/img/Theme_Food/Back_Food (6).svg',
+  '/assets/img/Theme_Food/Back_Food (7).svg',
+  '/assets/img/Theme_Food/Back_Food (8).svg',
+  '/assets/img/Theme_Food/Back_Food (9).svg',
+  '/assets/img/Theme_Food/Back_Food (10).svg',
+  '/assets/img/Theme_Food/Back_Food (11).svg',
+  '/assets/img/Theme_Food/Back_Food (12).svg',
+  '/assets/img/Theme_Food/Back_Food (13).svg',
+  '/assets/img/Theme_Food/Back_Food (14).svg',
+  '/assets/img/Theme_Food/Back_Food (15).svg',
+  '/assets/img/Theme_Food/Back_Food (16).svg',
+  '/assets/img/Theme_Food/Back_Food (17).svg',
+  '/assets/img/Theme_Food/Back_Food (18).svg',
+];
 
 export const THEME_ASSETS: Record<Theme, ThemeAssets> = {
   'code-vibes': {
@@ -69,11 +99,11 @@ export const THEME_ASSETS: Record<Theme, ThemeAssets> = {
     motifs: gamingMotifs,
   },
   'da-projects': {
-    back: '/assets/img/da-projects/back.svg', // TODO: placeholder – export from Figma
+    back: '/assets/img/Theme_DA/Face.svg',
     motifs: daProjectsMotifs,
   },
   'foods': {
-    back: '/assets/img/foods/back.svg', // TODO: placeholder – export from Figma
+    back: '/assets/img/Theme_Food/Face.svg',
     motifs: foodsMotifs,
   },
 };

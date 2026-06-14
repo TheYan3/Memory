@@ -1,5 +1,5 @@
 import '../scss/main.scss'
-import { homeScreen, settingsScreen, themeVisualPath, breadcrumbText } from './template'
+import { homeScreen, settingsScreen, themeVisualPath, breadcrumbText, gameoverScreen, winnerScreen, drawScreen } from './template'
 import { state, type Theme, type Player, type BoardSize } from './state'
 import { setTheme } from './theme'
 import { initGame, onCardClick } from './game'
@@ -23,7 +23,20 @@ function renderSettings(): void {
   if (el) el.innerHTML = settingsScreen(state);
 }
 
-/** Renders settings and transitions to the settings screen. */
+/** Renders the game-over summary into #gameover. */
+function renderGameover(): void {
+  const el = document.getElementById('gameover');
+  if (el) el.innerHTML = gameoverScreen(state);
+}
+
+/** Renders winner or draw content into #endscreen. */
+function renderEndscreen(): void {
+  const el = document.getElementById('endscreen');
+  if (!el) return;
+  el.innerHTML = state.scores.blue === state.scores.orange ? drawScreen() : winnerScreen(state);
+}
+
+/** Renders and transitions to the settings screen. */
 function navigateToSettings(): void {
   renderSettings();
   showScreen('settings');
@@ -35,11 +48,22 @@ function navigateToGame(): void {
   showScreen('game');
 }
 
+/** Renders endscreen content and shows it. */
+function showEndscreen(): void {
+  renderEndscreen();
+  showScreen('endscreen');
+}
+
+/** Resets scores in preparation for a new session. */
+function resetState(): void {
+  state.scores = { blue: 0, orange: 0 };
+}
+
 /** Updates preview image and breadcrumb to reflect current state. */
 function updateSettingsPreview(): void {
   const img   = document.getElementById('settings-preview-img') as HTMLImageElement | null;
   const crumb = document.getElementById('settings-breadcrumb');
-  if (img)   img.src        = themeVisualPath(state.selectedTheme);
+  if (img)   img.src           = themeVisualPath(state.selectedTheme);
   if (crumb) crumb.textContent = breadcrumbText(state);
 }
 
@@ -79,8 +103,15 @@ function handleGameClick(event: Event): void {
   const t = event.target as HTMLElement;
   if (t.closest('#exit-btn'))   { openExitModal(); return; }
   if (t.closest('#modal-back')) { closeExitModal(); return; }
-  if (t.closest('#modal-exit')) { closeExitModal(); showScreen('home'); return; }
+  if (t.closest('#modal-exit')) { closeExitModal(); navigateToSettings(); return; }
   if (t.closest('.card'))        onCardClick(event);
+}
+
+/** Resets scores and returns to the settings menu. */
+function handleEndscreenClick(event: Event): void {
+  if (!(event.target as HTMLElement).closest('#back-to-start')) return;
+  resetState();
+  navigateToSettings();
 }
 
 // Init
@@ -91,4 +122,9 @@ document.getElementById('home')?.addEventListener('click', handleHomeClick);
 document.getElementById('settings')?.addEventListener('change', handleSettingsChange);
 document.getElementById('settings')?.addEventListener('click', handleSettingsClick);
 document.getElementById('game')?.addEventListener('click', handleGameClick);
-document.addEventListener('game:over', () => showScreen('gameover'));
+document.getElementById('endscreen')?.addEventListener('click', handleEndscreenClick);
+document.addEventListener('game:over', () => {
+  renderGameover();
+  showScreen('gameover');
+  setTimeout(showEndscreen, 1200);
+});

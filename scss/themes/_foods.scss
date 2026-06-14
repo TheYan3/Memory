@@ -4,8 +4,7 @@
   --theme-bg:            #{a.$color-bg-foods};
   --theme-accent:        #{a.$color-accent-foods};
   --theme-text:          #{a.$color-primary-dark};
-  // TODO: replace once foods/back.svg is exported from Figma
-  --theme-card-back:     none;
+  --theme-card-back:     url('/assets/img/Theme_Food/Face.svg');
   --theme-exit-btn-color: #{a.$color-accent-foods};
   --theme-separator:      #{rgba(a.$color-primary-dark, 0.10)};
 }

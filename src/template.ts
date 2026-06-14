@@ -2,35 +2,40 @@ import { type AppState, type Theme, type CardData } from './state';
 
 // ── Home ────────────────────────────────────────────────────────────────────
 
+/** Placeholder until controller.svg is exported from Figma. */
+function svgController(): string {
+  return `<svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="20" width="192" height="100" rx="36" stroke="white" stroke-width="6"/>
+    <path d="M56 60v20M46 70h20" stroke="white" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="140" cy="62" r="7" fill="white"/>
+    <circle cx="158" cy="70" r="7" fill="white"/>
+    <circle cx="140" cy="78" r="7" fill="white"/>
+    <circle cx="122" cy="70" r="7" fill="white"/>
+    <rect x="82" y="34" width="16" height="12" rx="4" fill="white"/>
+    <rect x="102" y="34" width="16" height="12" rx="4" fill="white"/>
+  </svg>`;
+}
+
+function svgPlayIcon(): string {
+  return `<svg class="home__button__icon" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="1" y="1" width="20" height="14" rx="4" stroke="currentColor" stroke-width="2"/>
+    <path d="M7 5v6M4 8h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="16" cy="6" r="1.5" fill="currentColor"/>
+    <circle cx="16" cy="10" r="1.5" fill="currentColor"/>
+    <circle cx="19" cy="8" r="1.5" fill="currentColor"/>
+    <circle cx="13" cy="8" r="1.5" fill="currentColor"/>
+  </svg>`;
+}
+
 /** Returns the inner HTML for the #home screen. */
 export function homeScreen(): string {
   return `
-    <div class="home__watermark" aria-hidden="true">
-      <!-- TODO: replace with <img src="/assets/img/controller.svg" alt=""> once exported from Figma -->
-      <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="4" y="20" width="192" height="100" rx="36" stroke="white" stroke-width="6"/>
-        <path d="M56 60v20M46 70h20" stroke="white" stroke-width="6" stroke-linecap="round"/>
-        <circle cx="140" cy="62" r="7" fill="white"/>
-        <circle cx="158" cy="70" r="7" fill="white"/>
-        <circle cx="140" cy="78" r="7" fill="white"/>
-        <circle cx="122" cy="70" r="7" fill="white"/>
-        <rect x="82" y="34" width="16" height="12" rx="4" fill="white"/>
-        <rect x="102" y="34" width="16" height="12" rx="4" fill="white"/>
-      </svg>
-    </div>
+    <div class="home__watermark" aria-hidden="true">${svgController()}</div>
     <div class="home__content">
       <p class="home__eyebrow">It's play time.</p>
       <h1 class="home__headline">Ready to play?</h1>
       <button class="home__button" id="play-button">
-        <svg class="home__button__icon" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="1" y="1" width="20" height="14" rx="4" stroke="currentColor" stroke-width="2"/>
-          <path d="M7 5v6M4 8h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="16" cy="6" r="1.5" fill="currentColor"/>
-          <circle cx="16" cy="10" r="1.5" fill="currentColor"/>
-          <circle cx="19" cy="8" r="1.5" fill="currentColor"/>
-          <circle cx="13" cy="8" r="1.5" fill="currentColor"/>
-        </svg>
-        Play →
+        ${svgPlayIcon()} Play →
       </button>
     </div>
   `;
@@ -39,10 +44,10 @@ export function homeScreen(): string {
 // ── Settings ─────────────────────────────────────────────────────────────────
 
 const VISUALS: Record<Theme, string> = {
-  'code-vibes':  '/assets/img/Visuals/Theme_Visual_Code_Vibe.svg',
-  'gaming':      '/assets/img/Visuals/Theme_Visual_Gaming.svg',
-  'da-projects': '/assets/img/Visuals/Theme_Visual_DA_Projects.svg',
-  'foods':       '/assets/img/Visuals/Theme_Visual_Food.svg',
+  'code-vibes':  '/assets/img/Theme_Code_Vibes/Theme_Visual_Code_Vibe.svg',
+  'gaming':      '/assets/img/Theme_Gaming/Theme_Visual_Gaming.svg',
+  'da-projects': '/assets/img/Theme_DA/Theme_Visual_DA_Projects.svg',
+  'foods':       '/assets/img/Theme_Food/Theme_Visual_Food.svg',
 };
 
 /** Returns the asset path for the given theme's preview visual. */
@@ -61,7 +66,7 @@ export function breadcrumbText(s: AppState): string {
 }
 
 function iconPalette(): string {
-  return `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="8" r="2" fill="#F4D738"/><circle cx="13" cy="8" r="2" fill="#34D3B0"/><circle cx="10" cy="13" r="2" fill="#D81E73"/></svg>`;
+  return `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="8" r="2" fill="#F4D738"/><circle cx="13" cy="8" r="2" fill="#4DD5BC"/><circle cx="10" cy="13" r="2" fill="#D21D6E"/></svg>`;
 }
 
 function iconPlayer(): string {
@@ -122,44 +127,60 @@ function boardOptions(s: AppState): string {
 
 function previewBar(s: AppState): string {
   const player = s.startPlayer.charAt(0).toUpperCase() + s.startPlayer.slice(1);
+  const scores = `<span class="settings__preview-badge settings__preview-badge--blue">Blue 0</span><span class="settings__preview-badge settings__preview-badge--orange">Orange 0</span>`;
   return `
     <div class="settings__preview-bar">
-      <div class="settings__preview-scores">
-        <span class="settings__preview-badge settings__preview-badge--blue">Blue 0</span>
-        <span class="settings__preview-badge settings__preview-badge--orange">Orange 0</span>
-      </div>
-      <span class="settings__preview-current">
-        Current player:
+      <div class="settings__preview-scores">${scores}</div>
+      <span class="settings__preview-current">Current player:
         <span class="settings__preview-badge settings__preview-badge--${s.startPlayer}">${player}</span>
       </span>
       <button class="settings__preview-exit" disabled>Exit game</button>
     </div>`;
 }
 
-/** Returns the inner HTML for the #settings screen. */
-export function settingsScreen(s: AppState): string {
+function settingsHeader(): string {
   return `
     <div class="settings__header">
       <h1 class="settings__title">Settings</h1>
       <div class="settings__accent"></div>
-    </div>
-    <div class="settings__body">
-      <aside class="settings__left">
-        ${settingsGroup(iconPalette(), 'Game themes', themeOptions(s))}
-        ${settingsGroup(iconPlayer(), 'Choose player', playerOptions(s))}
-        ${settingsGroup(iconGrid(), 'Board size', boardOptions(s))}
-      </aside>
-      <div class="settings__right">
-        ${previewBar(s)}
-        <img id="settings-preview-img" class="settings__preview-img"
-             src="${themeVisualPath(s.selectedTheme)}"
-             alt="${s.selectedTheme} theme preview">
-      </div>
-    </div>
+    </div>`;
+}
+
+function settingsLeft(s: AppState): string {
+  return `
+    <aside class="settings__left">
+      ${settingsGroup(iconPalette(), 'Game themes', themeOptions(s))}
+      ${settingsGroup(iconPlayer(), 'Choose player', playerOptions(s))}
+      ${settingsGroup(iconGrid(), 'Board size', boardOptions(s))}
+    </aside>`;
+}
+
+function settingsRight(s: AppState): string {
+  return `
+    <div class="settings__right">
+      ${previewBar(s)}
+      <img id="settings-preview-img" class="settings__preview-img"
+           src="${themeVisualPath(s.selectedTheme)}" alt="${s.selectedTheme} theme preview">
+    </div>`;
+}
+
+function settingsFooter(s: AppState): string {
+  return `
     <footer class="settings__footer">
       <p id="settings-breadcrumb" class="settings__breadcrumb">${breadcrumbText(s)}</p>
       <button class="settings__start-btn" id="start-button">Start →</button>
     </footer>`;
+}
+
+/** Returns the inner HTML for the #settings screen. */
+export function settingsScreen(s: AppState): string {
+  return `
+    ${settingsHeader()}
+    <div class="settings__body">
+      ${settingsLeft(s)}
+      ${settingsRight(s)}
+    </div>
+    ${settingsFooter(s)}`;
 }
 
 // ── Game ──────────────────────────────────────────────────────────────────────
@@ -224,4 +245,78 @@ export function gameScreen(s: AppState, cards: CardData[]): string {
       </div>
     </div>
     ${exitModal()}`;
+}
+
+// ── Gameover & Endscreen ─────────────────────────────────────────────────────
+
+function svgConfetti(): string {
+  const r = (x: number, y: number, w: number, h: number, f: string, a: number) =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${f}" transform="rotate(${a},${x + w / 2},${y + h / 2})"/>`;
+  const c = (cx: number, cy: number, f: string) => `<circle cx="${cx}" cy="${cy}" r="5" fill="${f}"/>`;
+  return `<svg viewBox="0 0 440 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    ${r(20, 8, 12, 12, '#F4D738', 15)}${r(60, 4, 10, 10, '#4DD5BC', -10)}${r(110, 14, 14, 8, '#D21D6E', 25)}
+    ${r(160, 6, 10, 14, '#1E7594', -20)}${r(210, 10, 12, 10, '#F3832D', 10)}${r(260, 4, 8, 12, '#F4D738', -15)}
+    ${r(310, 12, 14, 8, '#4DD5BC', 30)}${r(360, 6, 10, 10, '#D21D6E', -5)}
+    ${c(40, 46, '#F4D738')}${c(140, 50, '#1E7594')}${c(240, 44, '#D21D6E')}${c(340, 48, '#F3832D')}
+  </svg>`;
+}
+
+function svgPawn(): string {
+  return `<svg viewBox="0 0 60 80" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="30" cy="16" r="12"/>
+    <rect x="20" y="28" width="20" height="12" rx="4"/>
+    <rect x="14" y="40" width="32" height="8" rx="3"/>
+    <rect x="8" y="48" width="44" height="16" rx="6"/>
+  </svg>`;
+}
+
+function svgScales(): string {
+  return `<svg viewBox="0 0 80 72" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="40" y1="8" x2="40" y2="60"/>
+    <rect x="18" y="60" width="44" height="8" rx="4" fill="currentColor" stroke="none"/>
+    <line x1="10" y1="18" x2="70" y2="18"/>
+    <line x1="18" y1="18" x2="10" y2="38"/>
+    <line x1="62" y1="18" x2="70" y2="38"/>
+    <rect x="2" y="38" width="22" height="6" rx="3" fill="currentColor" stroke="none"/>
+    <rect x="56" y="38" width="22" height="6" rx="3" fill="currentColor" stroke="none"/>
+  </svg>`;
+}
+
+/** Returns inner HTML for the #gameover screen. */
+export function gameoverScreen(s: AppState): string {
+  return `
+    <div class="gameover__content">
+      <h1 class="gameover__headline">Game over</h1>
+      <p class="gameover__label">Final score</p>
+      <div class="gameover__scores">
+        <span class="game__badge game__badge--blue">Blue</span>
+        <span class="gameover__score">${s.scores.blue}</span>
+        <span class="game__badge game__badge--orange">Orange</span>
+        <span class="gameover__score">${s.scores.orange}</span>
+      </div>
+    </div>`;
+}
+
+/** Returns inner HTML for #endscreen when there is a winner. */
+export function winnerScreen(s: AppState): string {
+  const p = s.scores.blue > s.scores.orange ? 'blue' : 'orange';
+  const label = p === 'blue' ? 'BLUE' : 'ORANGE';
+  return `
+    <div class="endscreen__confetti" aria-hidden="true">${svgConfetti()}</div>
+    <div class="endscreen__content">
+      <p class="endscreen__label">The winner is</p>
+      <p class="endscreen__winner endscreen__winner--${p}">${label} PLAYER</p>
+      <div class="endscreen__icon endscreen__icon--${p}">${svgPawn()}</div>
+      <button class="endscreen__btn" id="back-to-start">Back to start</button>
+    </div>`;
+}
+
+/** Returns inner HTML for #endscreen when the game ends in a draw. */
+export function drawScreen(): string {
+  return `
+    <div class="endscreen__content">
+      <h1 class="endscreen__draw">It's a DRAW</h1>
+      <div class="endscreen__icon">${svgScales()}</div>
+      <button class="endscreen__btn" id="back-to-start">Back to start</button>
+    </div>`;
 }
