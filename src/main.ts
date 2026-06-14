@@ -1,6 +1,7 @@
 import '../scss/main.scss'
 import { homeScreen, settingsScreen, themeVisualPath, breadcrumbText } from './template'
 import { state, type Theme, type Player, type BoardSize } from './state'
+import { setTheme } from './theme'
 
 /** Hides all screens and reveals the one matching the given id. */
 function showScreen(id: string): void {
@@ -55,9 +56,11 @@ function handleSettingsChange(event: Event): void {
   updateSettingsPreview();
 }
 
-/** Navigates to the game screen when the start button is clicked. */
+/** Applies theme and navigates to the game screen when start is clicked. */
 function handleSettingsClick(event: Event): void {
-  if ((event.target as HTMLElement).closest('#start-button')) showScreen('game');
+  if (!(event.target as HTMLElement).closest('#start-button')) return;
+  setTheme(state.selectedTheme);
+  showScreen('game');
 }
 
 // Init

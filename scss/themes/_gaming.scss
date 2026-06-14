@@ -1,0 +1,9 @@
+@use '../abstracts/main' as a;
+
+.theme-gaming {
+  --theme-bg:            #{a.$color-primary-dark};
+  --theme-accent:        #{a.$color-accent-gaming};
+  --theme-text:          #{a.$color-white};
+  --theme-card-back:     url('/assets/img/Theme_Gaming/Face.svg');
+  --theme-exit-btn-color: #{a.$color-white};
+}
