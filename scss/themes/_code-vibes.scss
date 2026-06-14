@@ -6,4 +6,5 @@
   --theme-text:          #{a.$color-white};
   --theme-card-back:     url('/assets/img/Theme_Code_Vibes/Face_green.svg');
   --theme-exit-btn-color: #{a.$color-white};
+  --theme-separator:      #{rgba(a.$color-white, 0.12)};
 }

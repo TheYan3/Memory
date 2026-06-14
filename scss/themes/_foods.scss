@@ -7,4 +7,5 @@
   // TODO: replace once foods/back.svg is exported from Figma
   --theme-card-back:     none;
   --theme-exit-btn-color: #{a.$color-accent-foods};
+  --theme-separator:      #{rgba(a.$color-primary-dark, 0.10)};
 }

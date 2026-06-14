@@ -1,4 +1,4 @@
-import { type AppState, type Theme } from './state';
+import { type AppState, type Theme, type CardData } from './state';
 
 // ── Home ────────────────────────────────────────────────────────────────────
 
@@ -160,4 +160,68 @@ export function settingsScreen(s: AppState): string {
       <p id="settings-breadcrumb" class="settings__breadcrumb">${breadcrumbText(s)}</p>
       <button class="settings__start-btn" id="start-button">Start →</button>
     </footer>`;
+}
+
+// ── Game ──────────────────────────────────────────────────────────────────────
+
+function scoreBadges(): string {
+  return `
+    <span class="game__badge game__badge--blue">Blue</span>
+    <span id="score-blue" class="game__score">0</span>
+    <span class="game__badge game__badge--orange">Orange</span>
+    <span id="score-orange" class="game__score">0</span>`;
+}
+
+function currentPlayerBadge(s: AppState): string {
+  const p = s.currentPlayer;
+  const label = p.charAt(0).toUpperCase() + p.slice(1);
+  return `<span id="current-player" class="game__badge game__badge--${p}">${label}</span>`;
+}
+
+function gameHeader(s: AppState): string {
+  return `
+    <header class="game__header">
+      <div class="game__scores">${scoreBadges()}</div>
+      <div class="game__current">Current player: ${currentPlayerBadge(s)}</div>
+      <button class="game__exit-btn" id="exit-btn">Exit game</button>
+    </header>`;
+}
+
+function cardHtml(card: CardData): string {
+  return `
+    <button class="card" data-pair-id="${card.pairId}">
+      <div class="card__inner">
+        <div class="card__face card__face--front"></div>
+        <div class="card__face card__face--back">
+          <img src="${card.motifSrc}" alt="">
+        </div>
+      </div>
+    </button>`;
+}
+
+function exitModal(): string {
+  return `
+    <div class="modal is-hidden" id="exit-modal" role="dialog" aria-modal="true">
+      <div class="modal__overlay"></div>
+      <div class="modal__box">
+        <p class="modal__question">Are you sure you want to quit the game?</p>
+        <div class="modal__actions">
+          <button class="modal__btn modal__btn--filled" id="modal-back">Back to game</button>
+          <button class="modal__btn modal__btn--outline" id="modal-exit">Exit game</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+/** Returns the inner HTML for the #game screen. */
+export function gameScreen(s: AppState, cards: CardData[]): string {
+  const cols = s.boardSize === 36 ? 6 : 4;
+  return `
+    ${gameHeader(s)}
+    <div class="game__board">
+      <div class="game__grid" data-size="${s.boardSize}" style="--cols: ${cols}">
+        ${cards.map(cardHtml).join('')}
+      </div>
+    </div>
+    ${exitModal()}`;
 }

@@ -1,0 +1,68 @@
+@use '../abstracts/main' as a;
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.is-hidden { display: none; }
+}
+
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(a.$color-primary-dark, 0.65);
+}
+
+.modal__box {
+  position: relative;
+  z-index: 1;
+  background-color: a.$color-white;
+  border-radius: a.px-to-rem(16);
+  padding: a.px-to-rem(40) a.px-to-rem(48);
+  width: a.px-to-rem(540);
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: a.px-to-rem(32);
+}
+
+.modal__question {
+  font-size: a.px-to-rem(20);
+  font-weight: 700;
+  color: a.$color-primary-dark;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.modal__actions {
+  display: flex;
+  gap: a.px-to-rem(16);
+}
+
+.modal__btn {
+  padding: a.px-to-rem(12) a.px-to-rem(28);
+  border-radius: a.px-to-rem(8);
+  font-size: a.px-to-rem(15);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &--filled {
+    background-color: var(--theme-accent, #{a.$color-accent-code-vibes});
+    color: a.$color-white;
+    border: none;
+  }
+
+  &--outline {
+    background: none;
+    border: 2px solid var(--theme-accent, #{a.$color-accent-code-vibes});
+    color: var(--theme-accent, #{a.$color-accent-code-vibes});
+  }
+
+  &:hover { opacity: 0.82; }
+}
