@@ -1,20 +1,6 @@
 @use '../abstracts/main' as a;
 
 body {
-  font-family: 'Poppins', 'Inter', sans-serif;
-}
-
-.headline-xl {
-  font-size: a.px-to-rem(64);
-  font-weight: 800;
-}
-
-.headline-lg {
-  font-size: a.px-to-rem(48);
-  font-weight: 700;
-}
-
-.headline-md {
-  font-size: a.px-to-rem(32);
-  font-weight: 700;
+  font-family: a.$font-base;
+  font-weight: 400;
 }

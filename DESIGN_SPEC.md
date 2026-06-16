@@ -6,26 +6,38 @@ Referenz für die pixelgenaue Umsetzung. Quelle: Figma „Memory". Alle Frames s
 
 ## 1. Globales Designsystem
 
-### Farb-Tokens (Basis)
+### Farb-Tokens (Basis – EXAKT)
 | Token | Wert | Verwendung |
 |---|---|---|
 | `primary-dark` | `#303131` | Dunkler Hintergrund (Home, Code-vibes, Gaming, Game-over/Winner/Draw) |
-| `secondary-yellow` | `~#F4D738` | Play- / Start-Button, gelbe Akzent-Linien |
-| `white` | `#FFFFFF` | Heller Hintergrund (Settings, DA-Projects, Foods) |
+| `secondary-yellow` | `#F0EA6E` | Play- / Start-Button, gelbe Akzent-Linien |
+| `white` | `#FFFFFF` | Heller Hintergrund (Settings, DA-Projects) |
+| `cream` | `#F4ECE4` | Creme-Hintergrund (Foods-Theme / helle Flächen) |
+| `player-blue` | `#097FC5` | Spieler Blau (Badge, Figur, Text) |
+| `player-orange` | `#EA6900` | Spieler Orange (Badge, Figur, Text) |
 
-> Exakte Hex bitte am Screenshot / an den exportierten Assets feinjustieren. Karten-Hintergründe sind Bild-Füllungen und kommen direkt aus den exportierten Motiven.
+> Karten-Hintergründe sind Bild-Füllungen und kommen direkt aus den exportierten Motiven.
 
-### Theme-Akzentfarben (Näherung, an Screenshots matchen)
-| Theme | Hintergrund | Akzent | Motiv-Welt |
+### Theme-Akzentfarben (EXAKT – vom Nutzer bestätigt)
+| Theme | Hintergrund | Akzent (exakt) | Motiv-Welt |
 |---|---|---|---|
-| `code-vibes` | dunkel `#303131` | Türkis `~#34D3B0` | Programmier-Logos (HTML, CSS, JS, Git, Python, Vue, GitHub, VS Code …) |
-| `gaming` | dunkel `#303131` | Magenta/Pink `~#D81E73` | Gaming (Joystick, Würfel, Pac-Man-Geist, Münze …) |
-| `da-projects` | hell `#FFFFFF` | Blau `~#2C82C9` | DA-Projekt-Motive (Rakete, Cupcake, Diamant …) |
-| `foods` | hell, creme `~#FCEFE0` | Orange `~#F2922E` | Food (Burger, Croissant, Pizza, Eis …) |
+| `code-vibes` | dunkel `#303131` | Türkis `#4DD5BC` | Programmier-Logos (HTML, CSS, JS, Git, Python, Vue, GitHub, VS Code …) |
+| `gaming` | dunkel `#303131` | Magenta/Pink `#D21D6E` | Gaming (Joystick, Würfel, Pac-Man-Geist, Münze …) |
+| `da-projects` | hell `#FFFFFF` | Blau `#1E7594` | DA-Projekt-Motive (Rakete, Cupcake, Diamant …) |
+| `foods` | hell, creme `~#FCEFE0` | Orange `#F3832D` | Food (Burger, Croissant, Pizza, Eis …) |
 
-### Typografie
-- Eine kräftige, runde Sans-Serif (Figma nutzt sehr fette Headlines). Empfehlung: variable Sans wie „Poppins"/„Inter" fett. Headlines extra-bold, sehr groß.
+### Typografie (EXAKT aus Figma – Google Fonts: Red Rose, Orbitron, Almarai)
+| Rolle | Font | Stärke | Größe | Beispiel |
+|---|---|---|---|---|
+| Hero-Headline | **Red Rose** | 700 Bold | 140px | „Ready to play?" |
+| Ergebnis-Headline | **Orbitron** | 900 Black | 124px | „GAME OVER", „DRAW" |
+| Abschnitt-Headline | **Almarai** | 700 Bold | 24px | „Settings", „Game themes", „Choose player" |
+| Standardtext | **Almarai** | 700 | 20px | Optionen wie „Code vibes theme", „Blue", „16 cards" |
+| Dünner/sekundärer Text | **Almarai** | **400 Regular** | nach Bedarf | Breadcrumb, Hilfstexte – 400 statt 700 verwenden |
+
+- Fonts via Google Fonts laden (index.html `<link>` oder @import in vendors): Red Rose, Orbitron, Almarai.
 - Headlines („Ready to play?", „Game over", „DRAW") nutzen leichten Glow/Schatten in Akzentfarbe.
+- Schriftgrößen als Tokens via `px-to-rem`, nicht hart in px.
 
 ### Buttons
 - **Primary (gelb):** voll gefüllt `secondary-yellow`, dunkler Text, leicht abgerundet. (Play, Start)
@@ -91,11 +103,15 @@ Referenz für die pixelgenaue Umsetzung. Quelle: Figma „Memory". Alle Frames s
 ## 3. Screen-Flow / State
 
 ```
-Home --Play--> Settings --Start--> Game
-Game --Exit game--> Pop-up --Exit--> Home
+Home --Play--> Settings(Menü) --Start--> Game
+Game --Exit game--> Pop-up --Exit--> Settings(Menü)
 Game --letztes Paar gefunden--> Game over --(1200ms)--> Winner (oder Draw)
-Winner/Draw --Back to start--> Home
+Winner/Draw --Back to start--> Settings(Menü)
 ```
+
+> Wichtig (Nutzer-Vorgabe): Nach dem Spiel/Endscreen führt der Weg zurück ins **Menü (Settings)**, nicht zum Home-Screen. Auch „Exit game" im Pop-up führt ins Menü.
+
+> Single-Frame-Pflicht: Es wird **nie gescrollt**. Immer nur **ein** Screen gleichzeitig sichtbar, jeder Screen exakt Viewport-hoch (100vh/100dvh, `overflow: hidden`). Spielfeld (auch 6×6) skaliert so, dass es ohne Scrollen in den Viewport passt.
 
 **State, der über Screens gehalten wird:** gewähltes Theme, Spielerfarbe-Start (Blue/Orange), Boardgröße, Punktestände beider Spieler, aktueller Spieler.
 

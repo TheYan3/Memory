@@ -55,16 +55,6 @@ export function themeVisualPath(theme: Theme): string {
   return VISUALS[theme];
 }
 
-/** Returns the breadcrumb string reflecting current state. */
-export function breadcrumbText(s: AppState): string {
-  const themeNames: Record<Theme, string> = {
-    'code-vibes': 'Code vibes', 'gaming': 'Gaming',
-    'da-projects': 'DA Projects', 'foods': 'Foods',
-  };
-  const player = s.startPlayer.charAt(0).toUpperCase() + s.startPlayer.slice(1);
-  return `${themeNames[s.selectedTheme]} / ${player} / ${s.boardSize} cards`;
-}
-
 function iconPalette(): string {
   return `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="8" r="2" fill="#F4D738"/><circle cx="13" cy="8" r="2" fill="#4DD5BC"/><circle cx="10" cy="13" r="2" fill="#D21D6E"/></svg>`;
 }
@@ -83,7 +73,7 @@ function radioOption(name: string, value: string, label: string, checked: boolea
       <input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''}>
       <span class="settings__radio-dot"></span>
       <span class="settings__option-text">${label}</span>
-      <span class="settings__arrow" aria-hidden="true">›</span>
+      <span class="settings__arrow" aria-hidden="true"></span>
     </label>`;
 }
 
@@ -125,19 +115,6 @@ function boardOptions(s: AppState): string {
   ].join('');
 }
 
-function previewBar(s: AppState): string {
-  const player = s.startPlayer.charAt(0).toUpperCase() + s.startPlayer.slice(1);
-  const scores = `<span class="settings__preview-badge settings__preview-badge--blue">Blue 0</span><span class="settings__preview-badge settings__preview-badge--orange">Orange 0</span>`;
-  return `
-    <div class="settings__preview-bar">
-      <div class="settings__preview-scores">${scores}</div>
-      <span class="settings__preview-current">Current player:
-        <span class="settings__preview-badge settings__preview-badge--${s.startPlayer}">${player}</span>
-      </span>
-      <button class="settings__preview-exit" disabled>Exit game</button>
-    </div>`;
-}
-
 function settingsHeader(): string {
   return `
     <div class="settings__header">
@@ -158,16 +135,14 @@ function settingsLeft(s: AppState): string {
 function settingsRight(s: AppState): string {
   return `
     <div class="settings__right">
-      ${previewBar(s)}
       <img id="settings-preview-img" class="settings__preview-img"
            src="${themeVisualPath(s.selectedTheme)}" alt="${s.selectedTheme} theme preview">
     </div>`;
 }
 
-function settingsFooter(s: AppState): string {
+function settingsFooter(): string {
   return `
     <footer class="settings__footer">
-      <p id="settings-breadcrumb" class="settings__breadcrumb">${breadcrumbText(s)}</p>
       <button class="settings__start-btn" id="start-button">Start →</button>
     </footer>`;
 }
@@ -180,7 +155,7 @@ export function settingsScreen(s: AppState): string {
       ${settingsLeft(s)}
       ${settingsRight(s)}
     </div>
-    ${settingsFooter(s)}`;
+    ${settingsFooter()}`;
 }
 
 // ── Game ──────────────────────────────────────────────────────────────────────
@@ -199,12 +174,19 @@ function currentPlayerBadge(s: AppState): string {
   return `<span id="current-player" class="game__badge game__badge--${p}">${label}</span>`;
 }
 
+function svgExit(): string {
+  return `<svg class="game__exit-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M13 3H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M9 10h8m0 0-2.5-2.5M17 10l-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
 function gameHeader(s: AppState): string {
   return `
     <header class="game__header">
       <div class="game__scores">${scoreBadges()}</div>
       <div class="game__current">Current player: ${currentPlayerBadge(s)}</div>
-      <button class="game__exit-btn" id="exit-btn">Exit game</button>
+      <button class="game__exit-btn" id="exit-btn">${svgExit()} Exit game</button>
     </header>`;
 }
 
@@ -315,7 +297,8 @@ export function winnerScreen(s: AppState): string {
 export function drawScreen(): string {
   return `
     <div class="endscreen__content">
-      <h1 class="endscreen__draw">It's a DRAW</h1>
+      <p class="endscreen__draw-label">It's a</p>
+      <h1 class="endscreen__draw">DRAW</h1>
       <div class="endscreen__icon">${svgScales()}</div>
       <button class="endscreen__btn" id="back-to-start">Back to start</button>
     </div>`;

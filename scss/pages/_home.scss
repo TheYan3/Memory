@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: a.px-to-rem(16);
+  gap: a.px-to-rem(24);
   text-align: center;
   padding: 0 a.px-to-rem(24);
 }
@@ -42,26 +42,31 @@
 
 .home__headline {
   color: a.$color-white;
+  font-family: a.$font-hero;
   font-size: a.px-to-rem(72);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.1;
 
   @include a.respond('md') {
-    font-size: a.px-to-rem(96);
+    font-size: a.px-to-rem(100);
+  }
+
+  @include a.respond('lg') {
+    font-size: a.px-to-rem(140);
   }
 }
 
 .home__button {
   display: flex;
   align-items: center;
-  gap: a.px-to-rem(12);
-  margin-top: a.px-to-rem(16);
-  padding: a.px-to-rem(14) a.px-to-rem(40);
+  gap: a.px-to-rem(14);
+  margin-top: a.px-to-rem(8);
+  padding: a.px-to-rem(20) a.px-to-rem(56);
   background-color: a.$color-secondary-yellow;
   color: a.$color-primary-dark;
   border: none;
-  border-radius: a.px-to-rem(8);
-  font-size: a.px-to-rem(18);
+  border-radius: a.px-to-rem(10);
+  font-size: a.px-to-rem(20);
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s ease;
@@ -71,8 +76,8 @@
   }
 
   &__icon {
-    width: a.px-to-rem(22);
-    height: a.px-to-rem(22);
+    width: a.px-to-rem(24);
+    height: a.px-to-rem(24);
     flex-shrink: 0;
   }
 }

@@ -1,15 +1,19 @@
-$color-primary-dark: #303131;
-$color-secondary-yellow: #F4D738;
-$color-white: #FFFFFF;
-$color-player-blue: #2C6BF0;
-$color-player-orange: #F07D2C;
+$font-hero:   'Red Rose', sans-serif;
+$font-result: 'Orbitron', sans-serif;
+$font-base:   'Almarai', sans-serif;
 
-// Theme accent colours (approximations from DESIGN_SPEC – fine-tune against screenshots)
+$color-primary-dark:      #303131;
+$color-secondary-yellow:  #F0EA6E;
+$color-white:             #FFFFFF;
+$color-player-blue:       #097FC5;
+$color-player-orange:     #EA6900;
+
+// Theme accent colours
 $color-accent-code-vibes:  #4DD5BC;
 $color-accent-gaming:      #D21D6E;
 $color-accent-da-projects: #1E7594;
 $color-accent-foods:       #F3832D;
-$color-bg-foods:           #FCEFE0;
+$color-bg-foods:           #F4ECE4;
 
 $spacing: (
   'xs': 4,
