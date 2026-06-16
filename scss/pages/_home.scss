@@ -46,6 +46,7 @@
   font-size: a.px-to-rem(72);
   font-weight: 700;
   line-height: 1.1;
+  margin-top: a.px-to-rem(20);
 
   @include a.respond('md') {
     font-size: a.px-to-rem(100);
@@ -60,13 +61,13 @@
   display: flex;
   align-items: center;
   gap: a.px-to-rem(14);
-  margin-top: a.px-to-rem(8);
-  padding: a.px-to-rem(20) a.px-to-rem(56);
+  margin-top: a.px-to-rem(12);
+  padding: a.px-to-rem(22) a.px-to-rem(64);
   background-color: a.$color-secondary-yellow;
   color: a.$color-primary-dark;
   border: none;
-  border-radius: a.px-to-rem(10);
-  font-size: a.px-to-rem(20);
+  border-radius: a.px-to-rem(12);
+  font-size: a.px-to-rem(22);
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s ease;
@@ -76,8 +77,8 @@
   }
 
   &__icon {
-    width: a.px-to-rem(24);
-    height: a.px-to-rem(24);
+    width: a.px-to-rem(26);
+    height: a.px-to-rem(26);
     flex-shrink: 0;
   }
 }

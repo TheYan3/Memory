@@ -94,15 +94,25 @@
 }
 
 .endscreen__label {
-  font-size: a.px-to-rem(20);
+  font-size: a.px-to-rem(32);
   font-weight: 400;
   opacity: 0.8;
 }
 
 .endscreen__winner {
-  font-size: a.px-to-rem(52);
-  font-weight: 700;
+  font-family: a.$font-result;
+  font-size: a.px-to-rem(64);
+  font-weight: 900;
+  line-height: 1;
   letter-spacing: 0.02em;
+
+  @include a.respond('md') {
+    font-size: a.px-to-rem(90);
+  }
+
+  @include a.respond('lg') {
+    font-size: a.px-to-rem(124);
+  }
 
   &--blue   { color: a.$color-player-blue; }
   &--orange { color: a.$color-player-orange; }
