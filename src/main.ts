@@ -115,6 +115,7 @@ function handleEndscreenClick(event: Event): void {
 }
 
 // Init
+setTheme(state.selectedTheme);
 renderHome();
 
 // Event Listeners

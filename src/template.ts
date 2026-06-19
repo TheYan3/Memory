@@ -5,14 +5,14 @@ import { type AppState, type Theme, type CardData } from './state';
 /** Placeholder until controller.svg is exported from Figma. */
 function svgController(): string {
   return `<svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="20" width="192" height="100" rx="36" stroke="white" stroke-width="6"/>
-    <path d="M56 60v20M46 70h20" stroke="white" stroke-width="6" stroke-linecap="round"/>
-    <circle cx="140" cy="62" r="7" fill="white"/>
-    <circle cx="158" cy="70" r="7" fill="white"/>
-    <circle cx="140" cy="78" r="7" fill="white"/>
-    <circle cx="122" cy="70" r="7" fill="white"/>
-    <rect x="82" y="34" width="16" height="12" rx="4" fill="white"/>
-    <rect x="102" y="34" width="16" height="12" rx="4" fill="white"/>
+    <rect x="4" y="20" width="192" height="100" rx="36" stroke="currentColor" stroke-width="6"/>
+    <path d="M56 60v20M46 70h20" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="140" cy="62" r="7" fill="currentColor"/>
+    <circle cx="158" cy="70" r="7" fill="currentColor"/>
+    <circle cx="140" cy="78" r="7" fill="currentColor"/>
+    <circle cx="122" cy="70" r="7" fill="currentColor"/>
+    <rect x="82" y="34" width="16" height="12" rx="4" fill="currentColor"/>
+    <rect x="102" y="34" width="16" height="12" rx="4" fill="currentColor"/>
   </svg>`;
 }
 
@@ -30,13 +30,15 @@ function svgPlayIcon(): string {
 /** Returns the inner HTML for the #home screen. */
 export function homeScreen(): string {
   return `
-    <div class="home__watermark" aria-hidden="true">${svgController()}</div>
-    <div class="home__content">
-      <p class="home__eyebrow">It's play time.</p>
-      <h1 class="home__headline">Ready to play?</h1>
-      <button class="home__button" id="play-button">
-        ${svgPlayIcon()} Play →
-      </button>
+    <div class="home__stage">
+      <div class="home__watermark" aria-hidden="true">${svgController()}</div>
+      <div class="home__content">
+        <p class="home__eyebrow">It's play time.</p>
+        <h1 class="home__headline">Ready to play?</h1>
+        <button class="home__button" id="play-button">
+          ${svgPlayIcon()} Play →
+        </button>
+      </div>
     </div>
   `;
 }
@@ -56,15 +58,15 @@ export function themeVisualPath(theme: Theme): string {
 }
 
 function iconPalette(): string {
-  return `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="8" r="2" fill="#F4D738"/><circle cx="13" cy="8" r="2" fill="#4DD5BC"/><circle cx="10" cy="13" r="2" fill="#D21D6E"/></svg>`;
+  return `<img src="/assets/img/icons/icon-palette.svg" width="32" height="32" alt="" aria-hidden="true">`;
 }
 
 function iconPlayer(): string {
-  return `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 18c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+  return `<img src="/assets/img/icons/icon-chess-pawn.svg" width="32" height="32" alt="" aria-hidden="true">`;
 }
 
 function iconGrid(): string {
-  return `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>`;
+  return `<img src="/assets/img/icons/icon-style.svg" width="32" height="32" alt="" aria-hidden="true">`;
 }
 
 function radioOption(name: string, value: string, label: string, checked: boolean): string {
@@ -137,11 +139,10 @@ const THEME_NAMES: Record<Theme, string> = {
   'da-projects': 'DA Projects', 'foods': 'Foods',
 };
 
-/** Returns the selection-summary items (theme / player / board size) with separators. */
-export function settingsSummary(s: AppState): string {
-  const player = s.startPlayer.charAt(0).toUpperCase() + s.startPlayer.slice(1);
+/** Returns the summary bar labels matching the Figma design. */
+export function settingsSummary(_s: AppState): string {
   const sep = '<span class="settings__summary-sep" aria-hidden="true"></span>';
-  const items = [THEME_NAMES[s.selectedTheme], player, `${s.boardSize} cards`];
+  const items = ['Game theme', 'Player', 'Board size'];
   return items.map(t => `<span class="settings__summary-item">${t}</span>`).join(sep);
 }
 

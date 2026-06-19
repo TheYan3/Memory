@@ -1,10 +1,12 @@
 @use '../abstracts/main' as a;
 
 .theme-code-vibes {
-  --theme-bg:            #{a.$color-primary-dark};
-  --theme-accent:        #{a.$color-accent-code-vibes};
-  --theme-text:          #{a.$color-white};
-  --theme-card-back:     url('/assets/img/Theme_Code_Vibes/Face_green.svg');
+  --theme-bg:             #{a.$color-primary-dark};
+  --theme-accent:         #{a.$color-accent-code-vibes};
+  --theme-text:           #{a.$color-white};
+  --theme-card-back:      url('/assets/img/Theme_Code_Vibes/Face_green.svg');
   --theme-exit-btn-color: #{a.$color-white};
   --theme-separator:      #{rgba(a.$color-white, 0.12)};
+  --home-headline-glow:   0 0 40px rgba(77, 213, 188, 0.55), 0 0 100px rgba(77, 213, 188, 0.2);
+  --home-watermark-color: #F0EA6E;
 }
