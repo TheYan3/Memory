@@ -5,6 +5,7 @@ export interface ThemeAssets {
   motifs: string[];
 }
 
+// 17 motifs: Card_Picture (7).svg war Duplikat von (6) und wurde entfernt – für 6×6 fehlt ein 18. Motiv
 const codeVibesMotifs: string[] = [
   '/assets/img/Theme_Code_Vibes/Card_Picture.svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (1).svg',
@@ -13,7 +14,6 @@ const codeVibesMotifs: string[] = [
   '/assets/img/Theme_Code_Vibes/Card_Picture (4).svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (5).svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (6).svg',
-  '/assets/img/Theme_Code_Vibes/Card_Picture (7).svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (8).svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (9).svg',
   '/assets/img/Theme_Code_Vibes/Card_Picture (10).svg',

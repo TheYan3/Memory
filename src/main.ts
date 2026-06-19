@@ -1,5 +1,5 @@
 import '../scss/main.scss'
-import { homeScreen, settingsScreen, themeVisualPath, gameoverScreen, winnerScreen, drawScreen } from './template'
+import { homeScreen, settingsScreen, themeVisualPath, settingsSummary, gameoverScreen, winnerScreen, drawScreen } from './template'
 import { state, type Theme, type Player, type BoardSize } from './state'
 import { setTheme } from './theme'
 import { initGame, onCardClick } from './game'
@@ -59,10 +59,12 @@ function resetState(): void {
   state.scores = { blue: 0, orange: 0 };
 }
 
-/** Updates the preview image to reflect the current theme. */
+/** Updates the preview image and the selection summary to reflect current state. */
 function updateSettingsPreview(): void {
-  const img = document.getElementById('settings-preview-img') as HTMLImageElement | null;
-  if (img) img.src = themeVisualPath(state.selectedTheme);
+  const img     = document.getElementById('settings-preview-img') as HTMLImageElement | null;
+  const summary = document.getElementById('settings-summary');
+  if (img)     img.src           = themeVisualPath(state.selectedTheme);
+  if (summary) summary.innerHTML = settingsSummary(state);
 }
 
 /** Opens the exit-game confirmation modal. */

@@ -72,7 +72,7 @@ function radioOption(name: string, value: string, label: string, checked: boolea
     <label class="settings__option">
       <input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''}>
       <span class="settings__radio-dot"></span>
-      <span class="settings__option-text">${label}</span>
+      <span class="settings__option-text" data-text="${label}">${label}</span>
       <span class="settings__arrow" aria-hidden="true"></span>
     </label>`;
 }
@@ -132,30 +132,45 @@ function settingsLeft(s: AppState): string {
     </aside>`;
 }
 
+const THEME_NAMES: Record<Theme, string> = {
+  'code-vibes': 'Code vibes', 'gaming': 'Gaming',
+  'da-projects': 'DA Projects', 'foods': 'Foods',
+};
+
+/** Returns the selection-summary items (theme / player / board size) with separators. */
+export function settingsSummary(s: AppState): string {
+  const player = s.startPlayer.charAt(0).toUpperCase() + s.startPlayer.slice(1);
+  const sep = '<span class="settings__summary-sep" aria-hidden="true"></span>';
+  const items = [THEME_NAMES[s.selectedTheme], player, `${s.boardSize} cards`];
+  return items.map(t => `<span class="settings__summary-item">${t}</span>`).join(sep);
+}
+
+function svgStart(): string {
+  return `<svg class="settings__start-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10 8.5l5 3-5 3z" fill="currentColor"/></svg>`;
+}
+
 function settingsRight(s: AppState): string {
   return `
     <div class="settings__right">
       <img id="settings-preview-img" class="settings__preview-img"
            src="${themeVisualPath(s.selectedTheme)}" alt="${s.selectedTheme} theme preview">
+      <div class="settings__actionbar">
+        <div id="settings-summary" class="settings__summary">${settingsSummary(s)}</div>
+        <button class="settings__start-btn" id="start-button">${svgStart()} Start</button>
+      </div>
     </div>`;
-}
-
-function settingsFooter(): string {
-  return `
-    <footer class="settings__footer">
-      <button class="settings__start-btn" id="start-button">Start →</button>
-    </footer>`;
 }
 
 /** Returns the inner HTML for the #settings screen. */
 export function settingsScreen(s: AppState): string {
   return `
-    ${settingsHeader()}
-    <div class="settings__body">
-      ${settingsLeft(s)}
-      ${settingsRight(s)}
-    </div>
-    ${settingsFooter()}`;
+    <div class="settings__inner">
+      ${settingsHeader()}
+      <div class="settings__body">
+        ${settingsLeft(s)}
+        ${settingsRight(s)}
+      </div>
+    </div>`;
 }
 
 // ── Game ──────────────────────────────────────────────────────────────────────
