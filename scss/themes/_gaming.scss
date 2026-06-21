@@ -1,10 +1,42 @@
 @use '../abstracts/main' as a;
 
 .theme-gaming {
-  --theme-bg:            #{a.$color-primary-dark};
-  --theme-accent:        #{a.$color-accent-gaming};
-  --theme-text:          #{a.$color-white};
-  --theme-card-back:     url('/assets/img/Theme_Gaming/Face.svg');
-  --theme-exit-btn-color: #{a.$color-white};
-  --theme-separator:      #{rgba(a.$color-white, 0.12)};
+  // Overall — dark teal background
+  --theme-bg:             #294F60;
+  --theme-text:           #{a.$color-white};
+
+  // Header — pink at 20% opacity, rounded, 24 px internal padding
+  --theme-header-bg:        rgba(252, 149, 201, 0.20);
+  --theme-header-radius:    #{a.px-to-rem(10)};
+  --theme-header-padding-h: #{a.px-to-rem(24)};
+
+  // Score box — white, rounded
+  --theme-scores-bg:        #{a.$color-white};
+  --theme-scores-radius:    #{a.px-to-rem(10)};
+
+  // Player badges — solid player colors
+  --theme-badge-radius:         #{a.px-to-rem(6)};
+  --theme-badge-blue-bg:        #097FC4;
+  --theme-badge-blue-color:     #{a.$color-white};
+  --theme-badge-orange-bg:      #E96900;
+  --theme-badge-orange-color:   #{a.$color-white};
+
+  // Score numbers — player colors
+  --theme-score-blue-color:     #097FC4;
+  --theme-score-orange-color:   #E96900;
+
+  // Exit button — translucent pink bg, solid pink border, white text
+  --theme-exit-btn-bg:          rgba(237, 27, 118, 0.08);
+  --theme-exit-btn-border:      2px solid #E71C4F;
+  --theme-exit-btn-color:       #{a.$color-white};
+  --theme-exit-btn-radius:      #{a.px-to-rem(10)};
+
+  // Cards — diagonal gradient 140 ° (Figma: 139.7 °), NO border
+  // #ED1B76 (pink) → #092735 (dark navy) at 91.8 %
+  --theme-accent:               #{a.$color-accent-gaming};
+  --theme-card-back:            linear-gradient(140deg, #ED1B76 0%, #092735 91.8%);
+  --theme-card-back-size:       cover;
+  --theme-card-face-bg:         #ED1B76;
+  --theme-card-motif-bg:        #F6F1F3;
+  --theme-card-radius:          #{a.px-to-rem(12)};
 }

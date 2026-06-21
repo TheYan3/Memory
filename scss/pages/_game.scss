@@ -4,76 +4,113 @@
   background-color: var(--theme-bg, #{a.$color-primary-dark});
   color: var(--theme-text, #{a.$color-white});
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: a.px-to-rem(10) a.px-to-rem(112) 0;
   position: relative;
 }
+
+// ── Header ───────────────────────────────────────────────────────────────────
 
 .game__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: a.px-to-rem(16);
-  padding: a.px-to-rem(16) a.px-to-rem(40);
   flex-shrink: 0;
+  padding: a.px-to-rem(16) var(--theme-header-padding-h, 0);
+  background: var(--theme-header-bg, transparent);
+  border-radius: var(--theme-header-radius, 0);
+  position: relative;  // anchor for absolutely-centred current-player
 }
 
 .game__scores {
   display: flex;
   align-items: center;
-  gap: a.px-to-rem(10);
-  background-color: var(--theme-separator, #{rgba(a.$color-white, 0.10)});
-  border-radius: a.px-to-rem(10);
-  padding: a.px-to-rem(8) a.px-to-rem(16);
+  gap: a.px-to-rem(20);
+  background-color: var(--theme-scores-bg, #{rgba(a.$color-white, 0.10)});
+  border-radius: var(--theme-scores-radius, #{a.px-to-rem(6)});
+  padding: a.px-to-rem(10) a.px-to-rem(20);
+  flex-shrink: 0;
 }
 
 .game__badge {
   display: inline-flex;
   align-items: center;
   padding: a.px-to-rem(4) a.px-to-rem(12);
-  border-radius: a.px-to-rem(6);
+  border-radius: var(--theme-badge-radius, #{a.px-to-rem(6)});
+  font-family: a.$font-hero;
   font-size: a.px-to-rem(20);
   font-weight: 700;
 
-  &--blue   { background-color: a.$color-player-blue;   color: a.$color-white; }
-  &--orange { background-color: a.$color-player-orange; color: a.$color-white; }
+  &--blue {
+    background-color: var(--theme-badge-blue-bg, #{a.$color-player-blue});
+    color: var(--theme-badge-blue-color, #{a.$color-white});
+  }
+
+  &--orange {
+    background-color: var(--theme-badge-orange-bg, #{a.$color-player-orange});
+    color: var(--theme-badge-orange-color, #{a.$color-white});
+  }
 }
 
 .game__score {
-  font-size: a.px-to-rem(22);
-  font-weight: 800;
-  min-width: a.px-to-rem(24);
+  font-family: a.$font-hero;
+  font-size: a.px-to-rem(24);
+  font-weight: 700;
+  min-width: a.px-to-rem(20);
   text-align: center;
+  color: var(--theme-text, #{a.$color-white});
+}
+
+// Score number gets player color, independent of badge text color
+.game__badge--blue + .game__score {
+  color: var(--theme-score-blue-color, #{a.$color-player-blue});
+}
+.game__badge--orange + .game__score {
+  color: var(--theme-score-orange-color, #{a.$color-player-orange});
 }
 
 .game__current {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: a.px-to-rem(8);
-  font-size: a.px-to-rem(16);
-  font-weight: 400;
+  font-family: a.$font-hero;
+  font-size: a.px-to-rem(26);
+  font-weight: 700;
+  color: var(--theme-text, #{a.$color-white});
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .game__exit-btn {
   display: flex;
   align-items: center;
-  gap: a.px-to-rem(8);
-  background: none;
-  border: 1px solid var(--theme-exit-btn-color, #{a.$color-white});
+  gap: a.px-to-rem(10);
+  margin-left: auto;
+  background: var(--theme-exit-btn-bg, transparent);
+  border: var(--theme-exit-btn-border, 2px solid var(--theme-exit-btn-bg, var(--theme-exit-btn-color, #{a.$color-white})));
+  border-radius: var(--theme-exit-btn-radius, 0);
   color: var(--theme-exit-btn-color, #{a.$color-white});
-  padding: a.px-to-rem(10) a.px-to-rem(20);
-  border-radius: a.px-to-rem(8);
-  font-size: a.px-to-rem(16);
+  padding: a.px-to-rem(14) a.px-to-rem(24);
+  font-family: a.$font-hero;
+  font-size: a.px-to-rem(22);
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  white-space: nowrap;
 
-  &:hover { opacity: 0.72; }
+  &:hover { opacity: 0.80; }
 }
 
 .game__exit-icon {
-  width: a.px-to-rem(18);
-  height: a.px-to-rem(18);
+  width: a.px-to-rem(22);
+  height: a.px-to-rem(22);
   flex-shrink: 0;
 }
+
+// ── Board ─────────────────────────────────────────────────────────────────────
 
 .game__board {
   flex: 1;
@@ -81,18 +118,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: a.px-to-rem(20) a.px-to-rem(40);
-  overflow: hidden;
+  padding: a.px-to-rem(24) 0;
 }
 
+// Fixed card size (120 × 120 px), 16 px gap — exakt Figma 4×4 = 528 × 528
 .game__grid {
   display: grid;
-  grid-template-columns: repeat(var(--cols, 4), 1fr);
-  grid-auto-rows: 1fr;
-  gap: a.px-to-rem(10);
-  aspect-ratio: var(--cols, 4) / var(--rows, 4);
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  margin: auto;
+  grid-template-columns: repeat(var(--cols, 4), #{a.px-to-rem(120)});
+  grid-template-rows: repeat(var(--rows, 4), #{a.px-to-rem(120)});
+  gap: a.px-to-rem(16);
 }

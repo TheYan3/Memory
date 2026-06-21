@@ -4,9 +4,9 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  aspect-ratio: 1 / 1;
   padding: 0;
-  border-radius: a.px-to-rem(10);
+  width: a.px-to-rem(120);
+  height: a.px-to-rem(120);
 
   &__inner {
     width: 100%;
@@ -20,28 +20,34 @@
     position: absolute;
     inset: 0;
     backface-visibility: hidden;
-    border-radius: a.px-to-rem(10);
     overflow: hidden;
+    border-radius: var(--theme-card-radius, 0);
+    border: var(--theme-card-border, none);
+    box-sizing: border-box;
   }
 
-  // Visible when card is face-down (shows theme back image)
+  // Shown face-down — uses theme card-back SVG as background image
   &__face--front {
     background-image: var(--theme-card-back);
-    background-size: cover;
+    background-size: var(--theme-card-back-size, cover);
+    background-repeat: no-repeat;
     background-position: center;
-    background-color: var(--theme-accent, #{a.$color-accent-code-vibes});
+    background-color: var(--theme-card-face-bg, var(--theme-accent, #{a.$color-accent-code-vibes}));
   }
 
-  // Visible when card is flipped (shows motif)
+  // Shown face-up (after flip) — shows the motif SVG
   &__face--back {
     transform: rotateY(180deg);
-    background-color: var(--theme-bg, #{a.$color-primary-dark});
+    background-color: var(--theme-card-motif-bg, var(--theme-bg, #{a.$color-primary-dark}));
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__face img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 

@@ -127,5 +127,5 @@ document.getElementById('endscreen')?.addEventListener('click', handleEndscreenC
 document.addEventListener('game:over', () => {
   renderGameover();
   showScreen('gameover');
-  setTimeout(showEndscreen, 1200);
+  setTimeout(showEndscreen, 3200);
 });

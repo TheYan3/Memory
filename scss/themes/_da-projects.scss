@@ -1,10 +1,41 @@
 @use '../abstracts/main' as a;
 
 .theme-da-projects {
-  --theme-bg:            #{a.$color-white};
-  --theme-accent:        #{a.$color-accent-da-projects};
-  --theme-text:          #{a.$color-primary-dark};
-  --theme-card-back:     url('/assets/img/Theme_DA/Face.svg');
-  --theme-exit-btn-color: #{a.$color-accent-da-projects};
-  --theme-separator:      #{rgba(a.$color-primary-dark, 0.10)};
+  // Overall — white background, dark teal text
+  --theme-bg:               #FFFFFF;
+  --theme-text:             #{a.$color-accent-da-projects};   // #1E7594
+
+  // Header — light blue-gray box with rounded corners, 24 px internal padding
+  --theme-header-bg:        #F0F3F4;
+  --theme-header-radius:    #{a.px-to-rem(10)};
+  --theme-header-padding-h: #{a.px-to-rem(24)};
+
+  // Score box — white pill with player-colored numbers
+  --theme-scores-bg:        #FFFFFF;
+  --theme-scores-radius:    #{a.px-to-rem(10)};
+
+  // Player badges — solid player colors, white text
+  --theme-badge-radius:         #{a.px-to-rem(6)};
+  --theme-badge-blue-bg:        #097FC4;
+  --theme-badge-blue-color:     #{a.$color-white};
+  --theme-badge-orange-bg:      #E96900;
+  --theme-badge-orange-color:   #{a.$color-white};
+
+  // Score numbers — match player colors (rgb 9,127,196 / rgb 233,105,0 from Figma)
+  --theme-score-blue-color:     #097FC4;
+  --theme-score-orange-color:   #E96900;
+
+  // Exit button — light blue bg (#BFE5F2), dark teal text/icon, rounded
+  --theme-exit-btn-bg:          #BFE5F2;
+  --theme-exit-btn-color:       #{a.$color-accent-da-projects};
+  --theme-exit-btn-radius:      #{a.px-to-rem(10)};
+
+  // Cards — face-down #1E7594, face-up motif bg #DCE9EE, radius 13 px
+  // Face.svg is 49×40 px — show at natural size, centered on teal bg
+  --theme-accent:               #{a.$color-accent-da-projects};
+  --theme-card-back:            url('/assets/img/Theme_DA/Face.svg');
+  --theme-card-back-size:       auto;
+  --theme-card-face-bg:         #{a.$color-accent-da-projects};
+  --theme-card-motif-bg:        #DCE9EE;
+  --theme-card-radius:          #{a.px-to-rem(13)};
 }

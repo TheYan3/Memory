@@ -234,8 +234,8 @@ function exitModal(): string {
 
 /** Returns the inner HTML for the #game screen. */
 export function gameScreen(s: AppState, cards: CardData[]): string {
-  const cols = s.boardSize === 36 ? 6 : 4;
-  const rows = s.boardSize === 16 ? 4 : 6;
+  const cols = s.boardSize === 16 ? 4 : 6;
+  const rows = s.boardSize === 36 ? 6 : 4;
   return `
     ${gameHeader(s)}
     <div class="game__board">

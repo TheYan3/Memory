@@ -1,12 +1,36 @@
 @use '../abstracts/main' as a;
 
 .theme-code-vibes {
+  // Backgrounds
   --theme-bg:             #{a.$color-primary-dark};
-  --theme-accent:         #{a.$color-accent-code-vibes};
   --theme-text:           #{a.$color-white};
-  --theme-card-back:      url('/assets/img/Theme_Code_Vibes/Face_green.svg');
+
+  // Score box — #86E8D6 bei 20 % Deckraft (exakt aus Figma-Inspektor)
+  --theme-scores-bg:      rgba(134, 232, 214, 0.20);
+  --theme-scores-radius:  0px;
+
+  // Player badges — Standard Solid-Pills mit Playerfarben + weißer Text
+  --theme-badge-radius:         #{a.px-to-rem(6)};
+  --theme-badge-blue-bg:        #{a.$color-player-blue};
+  --theme-badge-blue-color:     #{a.$color-white};
+  --theme-badge-orange-bg:      #{a.$color-player-orange};
+  --theme-badge-orange-color:   #{a.$color-white};
+
+  // Score numbers — white on dark background (same as theme text)
+  --theme-score-blue-color:     #{a.$color-white};
+  --theme-score-orange-color:   #{a.$color-white};
+
+  // Exit button — teal gefüllt (Figma: secondary button fill)
+  --theme-exit-btn-bg:    #{a.$color-accent-code-vibes};
   --theme-exit-btn-color: #{a.$color-white};
-  --theme-separator:      #{rgba(a.$color-white, 0.12)};
+
+  // Cards
+  --theme-accent:         #{a.$color-accent-code-vibes};
+  --theme-card-back:      url('/assets/img/Theme_Code_Vibes/Face_green.svg');
+  --theme-card-face-bg:   #{a.$color-accent-code-vibes};
+  --theme-card-motif-bg:  #E8F3F0;
+
+  // Glow / decorative
   --home-headline-glow:   0 0 40px rgba(77, 213, 188, 0.55), 0 0 100px rgba(77, 213, 188, 0.2);
   --home-watermark-color: #F0EA6E;
 }
