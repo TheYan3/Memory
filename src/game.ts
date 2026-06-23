@@ -2,6 +2,8 @@ import { state, type CardData } from './state';
 import { THEME_ASSETS } from './assets';
 import { gameScreen } from './template';
 
+const FLIP_BACK_DELAY_MS = 800;
+
 let flipped: HTMLButtonElement[] = [];
 let locked = false;
 let matchedPairs = 0;
@@ -89,7 +91,7 @@ function onMismatch(): void {
     switchPlayer();
     updateGameUI();
     locked = false;
-  }, 800);
+  }, FLIP_BACK_DELAY_MS);
 }
 
 /** Compares the two face-up cards and dispatches to onMatch or onMismatch. */

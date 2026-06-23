@@ -1,16 +1,1 @@
-@use 'sass:map';
-
-$breakpoints: (
-  'zero': 0px,
-  'sm': 576px,
-  'md': 768px,
-  'lg': 992px,
-  'xl': 1200px,
-  'xxl': 1440px,
-);
-
-@mixin respond($size) {
-  @media (min-width: map.get($breakpoints, $size)) {
-    @content;
-  }
-}
+// No mixins — breakpoints inlined where used.

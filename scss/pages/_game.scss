@@ -16,6 +16,9 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  max-width: a.px-to-rem(1940);
+  width: 100%;
+  margin-inline: auto;
   padding: a.px-to-rem(16) var(--theme-header-padding-h, 0);
   background: var(--theme-header-bg, transparent);
   border-radius: var(--theme-header-radius, 0);

@@ -1,10 +1,34 @@
 @use '../abstracts/main' as a;
 
 .theme-foods {
-  --theme-bg:            #{a.$color-bg-foods};
-  --theme-accent:        #{a.$color-accent-foods};
-  --theme-text:          #{a.$color-primary-dark};
-  --theme-card-back:     url('/assets/img/Theme_Food/Face.svg');
-  --theme-exit-btn-color: #{a.$color-accent-foods};
-  --theme-separator:      #{rgba(a.$color-primary-dark, 0.10)};
+  --theme-bg:               #FFFFFF;
+  --theme-text:             #A35112;
+
+  --theme-header-bg:        #F0E5D9;
+  --theme-header-radius:    #{a.px-to-rem(10)};
+  --theme-header-padding-h: #{a.px-to-rem(24)};
+
+  --theme-scores-bg:        #{a.$color-white};
+  --theme-scores-radius:    #{a.px-to-rem(10)};
+
+  --theme-badge-radius:         #{a.px-to-rem(6)};
+  --theme-badge-blue-bg:        #097FC4;
+  --theme-badge-blue-color:     #{a.$color-white};
+  --theme-badge-orange-bg:      #E96900;
+  --theme-badge-orange-color:   #{a.$color-white};
+
+  --theme-score-blue-color:     #097FC4;
+  --theme-score-orange-color:   #E96900;
+
+  --theme-exit-btn-bg:          #FFF9F2;
+  --theme-exit-btn-border:      3px solid #F3832D;
+  --theme-exit-btn-color:       #F3832D;
+  --theme-exit-btn-radius:      #{a.px-to-rem(10)};
+
+  --theme-accent:               #{a.$color-accent-foods};
+  --theme-card-back:            url('/assets/img/Theme_Food/Face.svg');
+  --theme-card-back-size:       auto;
+  --theme-card-face-bg:         #F3832D;
+  --theme-card-motif-bg:        #F4ECE4;
+  --theme-card-radius:          0;
 }

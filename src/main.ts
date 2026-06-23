@@ -1,8 +1,42 @@
 import '../scss/main.scss'
+
+import confetti from 'canvas-confetti'
+
 import { homeScreen, settingsScreen, themeVisualPath, settingsSummary, gameoverScreen, winnerScreen, drawScreen } from './template'
 import { state, type Theme, type Player, type BoardSize } from './state'
 import { setTheme } from './theme'
 import { initGame, onCardClick } from './game'
+
+const CONFETTI_DURATION_MS  = 5000;
+const GAMEOVER_SHOW_DELAY_MS = 3200;
+
+const CONFETTI_OPTS = {
+  particleCount: 8,
+  spread:        80,
+  origin:        { y: 0.5 },
+  gravity:       0.8,
+  scalar:        1.4,
+  startVelocity: 55,
+  ticks:         400,
+} as const;
+
+let confettiStop: (() => void) | null = null;
+
+/** Fires a realistic confetti burst from both sides for CONFETTI_DURATION_MS. */
+function fireConfetti(): void {
+  const accent = getComputedStyle(document.body).getPropertyValue('--theme-accent').trim() || '#4DD5BC';
+  const colors = [accent, '#F4D738', '#F3832D', '#D21D6E', '#4DD5BC', '#1E7594'];
+  const end = Date.now() + CONFETTI_DURATION_MS;
+
+  function frame(): void {
+    confetti({ ...CONFETTI_OPTS, angle: 60,  origin: { x: 0, y: 0.5 }, colors });
+    confetti({ ...CONFETTI_OPTS, angle: 120, origin: { x: 1, y: 0.5 }, colors });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  }
+
+  confettiStop = () => confetti.reset();
+  frame();
+}
 
 /** Hides all screens and reveals the one matching the given id. */
 function showScreen(id: string): void {
@@ -50,8 +84,11 @@ function navigateToGame(): void {
 
 /** Renders endscreen content and shows it. */
 function showEndscreen(): void {
+  confettiStop?.();
+  confettiStop = null;
   renderEndscreen();
   showScreen('endscreen');
+  if (state.scores.blue !== state.scores.orange) fireConfetti();
 }
 
 /** Resets scores in preparation for a new session. */
@@ -110,6 +147,8 @@ function handleGameClick(event: Event): void {
 /** Resets scores and returns to the settings menu. */
 function handleEndscreenClick(event: Event): void {
   if (!(event.target as HTMLElement).closest('#back-to-start')) return;
+  confettiStop?.();
+  confettiStop = null;
   resetState();
   navigateToSettings();
 }
@@ -127,5 +166,5 @@ document.getElementById('endscreen')?.addEventListener('click', handleEndscreenC
 document.addEventListener('game:over', () => {
   renderGameover();
   showScreen('gameover');
-  setTimeout(showEndscreen, 3200);
+  setTimeout(showEndscreen, GAMEOVER_SHOW_DELAY_MS);
 });

@@ -84,7 +84,7 @@ function settingsGroup(icon: string, title: string, options: string): string {
     <div class="settings__group">
       <div class="settings__group-header">
         <span class="settings__group-icon">${icon}</span>
-        <span class="settings__group-title">${title}</span>
+        <h2 class="settings__group-title">${title}</h2>
       </div>
       <div class="settings__options">${options}</div>
     </div>`;
@@ -127,11 +127,11 @@ function settingsHeader(): string {
 
 function settingsLeft(s: AppState): string {
   return `
-    <aside class="settings__left">
+    <div class="settings__left">
       ${settingsGroup(iconPalette(), 'Game themes', themeOptions(s))}
       ${settingsGroup(iconPlayer(), 'Choose player', playerOptions(s))}
       ${settingsGroup(iconGrid(), 'Board size', boardOptions(s))}
-    </aside>`;
+    </div>`;
 }
 
 const THEME_NAMES: Record<Theme, string> = {
@@ -208,11 +208,11 @@ function gameHeader(s: AppState): string {
 
 function cardHtml(card: CardData): string {
   return `
-    <button class="card" data-pair-id="${card.pairId}">
+    <button class="card" data-pair-id="${card.pairId}" aria-label="Memory card">
       <div class="card__inner">
         <div class="card__face card__face--front"></div>
         <div class="card__face card__face--back">
-          <img src="${card.motifSrc}" alt="">
+          <img src="${card.motifSrc}" alt="" aria-hidden="true">
         </div>
       </div>
     </button>`;
@@ -220,10 +220,10 @@ function cardHtml(card: CardData): string {
 
 function exitModal(): string {
   return `
-    <div class="modal is-hidden" id="exit-modal" role="dialog" aria-modal="true">
+    <div class="modal is-hidden" id="exit-modal" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
       <div class="modal__overlay"></div>
       <div class="modal__box">
-        <p class="modal__question">Are you sure you want to quit the game?</p>
+        <p class="modal__question" id="exit-modal-title">Are you sure you want to quit the game?</p>
         <div class="modal__actions">
           <button class="modal__btn modal__btn--filled" id="modal-back">Back to game</button>
           <button class="modal__btn modal__btn--outline" id="modal-exit">Exit game</button>
@@ -248,17 +248,6 @@ export function gameScreen(s: AppState, cards: CardData[]): string {
 
 // ── Gameover & Endscreen ─────────────────────────────────────────────────────
 
-function svgConfetti(): string {
-  const r = (x: number, y: number, w: number, h: number, f: string, a: number) =>
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${f}" transform="rotate(${a},${x + w / 2},${y + h / 2})"/>`;
-  const c = (cx: number, cy: number, f: string) => `<circle cx="${cx}" cy="${cy}" r="5" fill="${f}"/>`;
-  return `<svg viewBox="0 0 440 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    ${r(20, 8, 12, 12, '#F4D738', 15)}${r(60, 4, 10, 10, '#4DD5BC', -10)}${r(110, 14, 14, 8, '#D21D6E', 25)}
-    ${r(160, 6, 10, 14, '#1E7594', -20)}${r(210, 10, 12, 10, '#F3832D', 10)}${r(260, 4, 8, 12, '#F4D738', -15)}
-    ${r(310, 12, 14, 8, '#4DD5BC', 30)}${r(360, 6, 10, 10, '#D21D6E', -5)}
-    ${c(40, 46, '#F4D738')}${c(140, 50, '#1E7594')}${c(240, 44, '#D21D6E')}${c(340, 48, '#F3832D')}
-  </svg>`;
-}
 
 function svgPawn(): string {
   return `<svg viewBox="0 0 60 80" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -301,7 +290,6 @@ export function winnerScreen(s: AppState): string {
   const p = s.scores.blue > s.scores.orange ? 'blue' : 'orange';
   const label = p === 'blue' ? 'BLUE' : 'ORANGE';
   return `
-    <div class="endscreen__confetti" aria-hidden="true">${svgConfetti()}</div>
     <div class="endscreen__content">
       <p class="endscreen__label">The winner is</p>
       <p class="endscreen__winner endscreen__winner--${p}">${label} PLAYER</p>
