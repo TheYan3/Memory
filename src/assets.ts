@@ -1,5 +1,6 @@
 import { type Theme } from './state';
 
+/** Asset paths for a single theme. */
 export interface ThemeAssets {
   motifs: string[];
 }
@@ -30,6 +31,7 @@ const gamingMotifs     = Array.from({length: 18}, (_, i) => `/assets/img/Theme_G
 const daProjectsMotifs = Array.from({length: 18}, (_, i) => `/assets/img/Theme_DA/Back_DA (${i + 1}).svg`);
 const foodsMotifs      = Array.from({length: 18}, (_, i) => `/assets/img/Theme_Food/Back_Food (${i + 1}).svg`);
 
+/** Motif image paths for every theme, indexed by theme key. */
 export const THEME_ASSETS: Record<Theme, ThemeAssets> = {
   'code-vibes':  { motifs: codeVibesMotifs },
   'gaming':      { motifs: gamingMotifs },
