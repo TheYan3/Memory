@@ -176,6 +176,7 @@ if (import.meta.env.DEV && window.location.hash) {
   if (screen === 'winner-orange') { state.scores = { blue: 3, orange: 5 }; showEndscreen(); }
   if (screen === 'draw')          { state.scores = { blue: 4, orange: 4 }; showEndscreen(); }
   if (screen === 'gameover')      { state.scores = { blue: 5, orange: 3 }; renderGameover(); showScreen('gameover'); }
+  if (screen === 'home')          { showScreen('home'); }
 }
 
 function handleThemeHover(event: MouseEvent): void {

@@ -45,7 +45,7 @@
 
 .home__eyebrow {
   color: a.$color-white;
-  font-size: a.px-to-rem(18);
+  font-size: a.px-to-rem(48);
   font-weight: 400;
 }
 
@@ -63,7 +63,8 @@
   display: flex;
   align-items: center;
   gap: a.px-to-rem(14);
-  padding: a.px-to-rem(22) a.px-to-rem(64);
+  padding: a.px-to-rem(36) a.px-to-rem(64);
+  margin-top: a.px-to-rem(69);
   background-color: a.$color-secondary-yellow;
   color: a.$color-primary-dark;
   border: none;

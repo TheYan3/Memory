@@ -57,6 +57,18 @@
   .gameover__pawn { display: block; }
   .gameover__score { color: #1a1a2e; }
 
+  // Home — kein Glow auf Headline, Controller-Farbe wie Standard
+  --home-headline-glow: none;
+  --home-watermark-color: #{a.$color-secondary-yellow};
+
+  // Home — Button mit dunklem Rand wie Figma
+  .home__button {
+    border: #{a.px-to-rem(3)} solid #{a.$color-primary-dark};
+    border-radius: 0;
+    padding-top: #{a.px-to-rem(33)};
+    padding-bottom: #{a.px-to-rem(33)};
+  }
+
   // Endscreen — kein Glow auf DRAW
   --theme-draw-shadow: none;
 
