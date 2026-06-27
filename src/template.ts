@@ -280,29 +280,41 @@ export function gameoverScreen(s: AppState): string {
       <h1 class="gameover__headline">Game over</h1>
       <p class="gameover__label">Final score</p>
       <div class="gameover__scores">
-        <span class="game__badge game__badge--blue">Blue</span>
-        <span class="gameover__score">${s.scores.blue}</span>
-        <span class="game__badge game__badge--orange">Orange</span>
-        <span class="gameover__score">${s.scores.orange}</span>
+        <div class="gameover__score-item">
+          <span class="game__badge game__badge--orange">Orange</span>
+          <span class="gameover__pawn gameover__pawn--orange"></span>
+          <span class="gameover__score">${s.scores.orange}</span>
+        </div>
+        <div class="gameover__score-item">
+          <span class="game__badge game__badge--blue">Blue</span>
+          <span class="gameover__pawn gameover__pawn--blue"></span>
+          <span class="gameover__score">${s.scores.blue}</span>
+        </div>
       </div>
     </div>`;
 }
+
+const END_BTN_LABEL: Partial<Record<Theme, string>> = {
+  gaming: 'Home',
+};
 
 /** Returns inner HTML for #endscreen when there is a winner. */
 export function winnerScreen(s: AppState): string {
   const p = s.scores.blue > s.scores.orange ? 'blue' : 'orange';
   const label = p === 'blue' ? 'Blue' : 'Orange';
+  const btn = END_BTN_LABEL[s.selectedTheme] ?? 'Back to start';
   return `
     <div class="endscreen__content">
       <p class="endscreen__label">The winner is</p>
       <p class="endscreen__winner endscreen__winner--${p}">${label} Player</p>
       <div class="endscreen__icon endscreen__icon--${p}">${svgPawn()}</div>
-      <button class="endscreen__btn" id="back-to-start">Back to start</button>
+      <button class="endscreen__btn" id="back-to-start">${btn}</button>
     </div>`;
 }
 
 /** Returns inner HTML for #endscreen when the game ends in a draw. */
-export function drawScreen(): string {
+export function drawScreen(s: AppState): string {
+  const btn = END_BTN_LABEL[s.selectedTheme] ?? 'Back to start';
   return `
     <div class="endscreen__content">
       <div class="endscreen__draw-group">
@@ -310,8 +322,8 @@ export function drawScreen(): string {
         <h1 class="endscreen__draw">DRAW</h1>
       </div>
       <div class="endscreen__icon">
-        <img src="/Memory/assets/img/icons/Draw.svg" alt="Draw" class="endscreen__draw-icon">
+        <div class="endscreen__draw-icon" role="img" aria-label="Draw"></div>
       </div>
-      <button class="endscreen__btn" id="back-to-start">Back to start</button>
+      <button class="endscreen__btn" id="back-to-start">${btn}</button>
     </div>`;
 }

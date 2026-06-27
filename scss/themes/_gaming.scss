@@ -42,6 +42,24 @@
   --theme-exit-btn-color:  #{a.$color-white};
   --theme-exit-btn-radius: #{a.px-to-rem(10)};
 
+  // Gameover — kein Glow, Caps, Pawn-Icons in weißer Box
+  --theme-gameover-shadow: none;
+  --theme-gameover-headline-transform: uppercase;
+
+  .gameover__scores {
+    background: #{a.$color-white};
+    border-radius: #{a.px-to-rem(12)};
+    padding: #{a.px-to-rem(14)} #{a.px-to-rem(28)};
+    gap: #{a.px-to-rem(20)};
+  }
+
+  .gameover__score-item .game__badge { display: none; }
+  .gameover__pawn { display: block; }
+  .gameover__score { color: #1a1a2e; }
+
+  // Endscreen — kein Glow auf DRAW
+  --theme-draw-shadow: none;
+
   // Endscreen — chess pawn images for winner, pink outline button
   --theme-endscreen-icon-blue:   url('/Memory/assets/img/icons/pockal%201.svg');
   --theme-endscreen-icon-orange: url('/Memory/assets/img/icons/pockal%201.svg');

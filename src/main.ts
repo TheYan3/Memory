@@ -67,7 +67,7 @@ function renderGameover(): void {
 function renderEndscreen(): void {
   const el = document.getElementById('endscreen');
   if (!el) return;
-  el.innerHTML = state.scores.blue === state.scores.orange ? drawScreen() : winnerScreen(state);
+  el.innerHTML = state.scores.blue === state.scores.orange ? drawScreen(state) : winnerScreen(state);
 }
 
 /** Renders and transitions to the settings screen. */
@@ -160,7 +160,7 @@ function handleEndscreenClick(event: Event): void {
 setTheme(state.selectedTheme);
 renderHome();
 
-// Dev shortcut: #[theme]-winner-blue | #[theme]-winner-orange | #[theme]-draw
+// Dev shortcut: #[theme]-winner-blue | #[theme]-winner-orange | #[theme]-draw | #[theme]-gameover
 // theme = gaming | code-vibes | da-projects | foods (default: gaming)
 if (import.meta.env.DEV && window.location.hash) {
   const h = window.location.hash.slice(1);
@@ -175,6 +175,7 @@ if (import.meta.env.DEV && window.location.hash) {
   if (screen === 'winner-blue')   { state.scores = { blue: 5, orange: 3 }; showEndscreen(); }
   if (screen === 'winner-orange') { state.scores = { blue: 3, orange: 5 }; showEndscreen(); }
   if (screen === 'draw')          { state.scores = { blue: 4, orange: 4 }; showEndscreen(); }
+  if (screen === 'gameover')      { state.scores = { blue: 5, orange: 3 }; renderGameover(); showScreen('gameover'); }
 }
 
 function handleThemeHover(event: MouseEvent): void {
