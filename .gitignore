@@ -3,5 +3,5 @@ dist/
 css/
 CLAUDE.md
 .claude/
-*.md
+CLAUDE.md
 *.Identifier
