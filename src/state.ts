@@ -16,8 +16,8 @@ export interface CardData {
 /** Global application state shared across all modules. */
 export interface AppState {
   selectedTheme: Theme;
-  startPlayer: Player;
-  boardSize: BoardSize;
+  startPlayer: Player | null;
+  boardSize: BoardSize | null;
   currentPlayer: Player;
   scores: { blue: number; orange: number };
 }
@@ -25,8 +25,8 @@ export interface AppState {
 /** Singleton state object mutated in place throughout the session. */
 export const state: AppState = {
   selectedTheme: 'code-vibes',
-  startPlayer: 'blue',
-  boardSize: 16,
+  startPlayer: null,
+  boardSize: null,
   currentPlayer: 'blue',
   scores: { blue: 0, orange: 0 },
 };

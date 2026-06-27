@@ -1,42 +1,64 @@
 @use '../abstracts/main' as a;
 
 .theme-gaming {
-  // Overall — dark teal background
+  // Overall
   --theme-bg:             #294F60;
   --theme-text:           #{a.$color-white};
 
-  // Header — pink at 20% opacity, rounded, 24 px internal padding
+  // Header
+  --theme-header-height:    #{a.px-to-rem(102)};
   --theme-header-bg:        rgba(252, 149, 201, 0.20);
   --theme-header-radius:    #{a.px-to-rem(10)};
   --theme-header-padding-h: #{a.px-to-rem(24)};
 
-  // Score box — white, rounded
-  --theme-scores-bg:        #{a.$color-white};
-  --theme-scores-radius:    #{a.px-to-rem(10)};
+  // Score box
+  --theme-scores-bg:            #{a.$color-white};
+  --theme-scores-radius:        #{a.px-to-rem(10)};
+  --theme-player-label-display: none;
+  --theme-player-icon-size:     #{a.px-to-rem(32)};
+  --theme-player-icon-blue:     url('/Memory/assets/img/icons/chess_pawn (blue).svg');
+  --theme-player-icon-orange:   url('/Memory/assets/img/icons/chess_pawn (orange).svg');
 
-  // Player badges — solid player colors
-  --theme-badge-radius:         #{a.px-to-rem(6)};
-  --theme-badge-blue-bg:        #097FC4;
-  --theme-badge-blue-color:     #{a.$color-white};
-  --theme-badge-orange-bg:      #E96900;
-  --theme-badge-orange-color:   #{a.$color-white};
+  // Score numbers — Orbitron Bold 30px
+  --theme-score-font:         'Orbitron', sans-serif;
+  --theme-score-font-size:    #{a.px-to-rem(30)};
+  --theme-score-font-weight:  700;
+  --theme-score-blue-color:   #097FC4;
+  --theme-score-orange-color: #E96900;
 
-  // Score numbers — player colors
-  --theme-score-blue-color:     #097FC4;
-  --theme-score-orange-color:   #E96900;
+  // Current player icon — white pawn on player-colored box
+  --theme-current-player-blue-bg:      #097FC4;
+  --theme-current-player-orange-bg:    #E96900;
+  --theme-current-player-blue-icon:    url('/Memory/assets/img/icons/chess_pawn (white).svg');
+  --theme-current-player-orange-icon:  url('/Memory/assets/img/icons/chess_pawn (white).svg');
+  --theme-current-player-box-size:     #{a.px-to-rem(40)};
+  --theme-current-player-icon-bg-size: #{a.px-to-rem(25)} #{a.px-to-rem(35)};
+  --theme-current-player-radius:       #{a.px-to-rem(6)};
+  --theme-current-player-padding:      #{a.px-to-rem(5)};
 
-  // Exit button — translucent pink bg, solid pink border, white text
-  --theme-exit-btn-bg:          rgba(237, 27, 118, 0.08);
-  --theme-exit-btn-border:      2px solid #E71C4F;
-  --theme-exit-btn-color:       #{a.$color-white};
-  --theme-exit-btn-radius:      #{a.px-to-rem(10)};
+  // Exit button
+  --theme-exit-btn-bg:     rgba(237, 27, 118, 0.08);
+  --theme-exit-btn-border: 2px solid #E71C4F;
+  --theme-exit-btn-color:  #{a.$color-white};
+  --theme-exit-btn-radius: #{a.px-to-rem(10)};
 
-  // Cards — diagonal gradient 140 ° (Figma: 139.7 °), NO border
-  // #ED1B76 (pink) → #092735 (dark navy) at 91.8 %
-  --theme-accent:               #{a.$color-accent-gaming};
-  --theme-card-back:            linear-gradient(140deg, #ED1B76 0%, #092735 91.8%);
-  --theme-card-back-size:       cover;
-  --theme-card-face-bg:         #ED1B76;
-  --theme-card-motif-bg:        #F6F1F3;
-  --theme-card-radius:          #{a.px-to-rem(12)};
+  // Endscreen — chess pawn images for winner, pink outline button
+  --theme-endscreen-icon-blue:   url('/Memory/assets/img/icons/pockal%201.svg');
+  --theme-endscreen-icon-orange: url('/Memory/assets/img/icons/pockal%201.svg');
+  --theme-endscreen-btn-bg:      transparent;
+  --theme-endscreen-btn-border:  2px solid #E71C4F;
+  --theme-endscreen-btn-color:   #{a.$color-white};
+  --theme-endscreen-btn-radius:  #{a.px-to-rem(10)};
+
+  // Hide inline SVG only for winner icons (not draw scales)
+  .endscreen__icon--blue svg,
+  .endscreen__icon--orange svg { display: none; }
+
+  // Cards
+  --theme-accent:          #{a.$color-accent-gaming};
+  --theme-card-back:       linear-gradient(140deg, #ED1B76 0%, #092735 91.8%);
+  --theme-card-back-size:  cover;
+  --theme-card-face-bg:    #ED1B76;
+  --theme-card-motif-bg:   #F6F1F3;
+  --theme-card-radius:     #{a.px-to-rem(12)};
 }

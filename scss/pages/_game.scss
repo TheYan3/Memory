@@ -16,23 +16,46 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  height: var(--theme-header-height, #{a.px-to-rem(62)});
   max-width: a.px-to-rem(1940);
   width: 100%;
   margin-inline: auto;
-  padding: a.px-to-rem(16) var(--theme-header-padding-h, 0);
+  padding-inline: var(--theme-header-padding-h, 0);
   background: var(--theme-header-bg, transparent);
   border-radius: var(--theme-header-radius, 0);
-  position: relative;  // anchor for absolutely-centred current-player
+  position: relative;
 }
 
 .game__scores {
   display: flex;
   align-items: center;
-  gap: a.px-to-rem(20);
+  gap: a.px-to-rem(12);
+  height: a.px-to-rem(60);
   background-color: var(--theme-scores-bg, #{rgba(a.$color-white, 0.10)});
   border-radius: var(--theme-scores-radius, #{a.px-to-rem(6)});
-  padding: a.px-to-rem(10) a.px-to-rem(20);
+  padding-inline: a.px-to-rem(20);
   flex-shrink: 0;
+}
+
+.game__player-icon {
+  width: var(--theme-player-icon-size, #{a.px-to-rem(24)});
+  height: var(--theme-player-icon-size, #{a.px-to-rem(24)});
+  flex-shrink: 0;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &--blue   { background-image: var(--theme-player-icon-blue,   url('/Memory/assets/img/icons/BluePlayer.svg')); }
+  &--orange { background-image: var(--theme-player-icon-orange, url('/Memory/assets/img/icons/OrangePlayer.svg')); }
+}
+
+.game__player-label {
+  font-family: a.$font-hero;
+  font-size: a.px-to-rem(20);
+  font-weight: 700;
+  color: var(--theme-text, #{a.$color-white});
+  display: var(--theme-player-label-display, inline);
 }
 
 .game__badge {
@@ -56,20 +79,41 @@
 }
 
 .game__score {
-  font-family: a.$font-hero;
-  font-size: a.px-to-rem(24);
-  font-weight: 700;
+  font-family: var(--theme-score-font, #{a.$font-hero});
+  font-size: var(--theme-score-font-size, #{a.px-to-rem(24)});
+  font-weight: var(--theme-score-font-weight, 700);
   min-width: a.px-to-rem(20);
   text-align: center;
   color: var(--theme-text, #{a.$color-white});
 }
 
-// Score number gets player color, independent of badge text color
-.game__badge--blue + .game__score {
+// Score number gets player color
+.game__player-icon--blue + .game__player-label + .game__score {
   color: var(--theme-score-blue-color, #{a.$color-player-blue});
 }
-.game__badge--orange + .game__score {
+.game__player-icon--orange + .game__player-label + .game__score {
   color: var(--theme-score-orange-color, #{a.$color-player-orange});
+}
+
+// Current player icon — theme can add colored bg box
+#current-player {
+  width: var(--theme-current-player-box-size, var(--theme-player-icon-size, #{a.px-to-rem(24)}));
+  height: var(--theme-current-player-box-size, var(--theme-player-icon-size, #{a.px-to-rem(24)}));
+
+  &[data-player="blue"] {
+    background-color: var(--theme-current-player-blue-bg, transparent);
+    background-image: var(--theme-current-player-blue-icon, var(--theme-player-icon-blue, url('/Memory/assets/img/icons/BluePlayer.svg')));
+    background-size: var(--theme-current-player-icon-bg-size, contain);
+    border-radius: var(--theme-current-player-radius, 0);
+    padding: var(--theme-current-player-padding, 0);
+  }
+  &[data-player="orange"] {
+    background-color: var(--theme-current-player-orange-bg, transparent);
+    background-image: var(--theme-current-player-orange-icon, var(--theme-player-icon-orange, url('/Memory/assets/img/icons/OrangePlayer.svg')));
+    background-size: var(--theme-current-player-icon-bg-size, contain);
+    border-radius: var(--theme-current-player-radius, 0);
+    padding: var(--theme-current-player-padding, 0);
+  }
 }
 
 .game__current {

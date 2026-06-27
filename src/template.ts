@@ -46,10 +46,10 @@ export function homeScreen(): string {
 // ── Settings ─────────────────────────────────────────────────────────────────
 
 const VISUALS: Record<Theme, string> = {
-  'code-vibes':  '/assets/img/Theme_Code_Vibes/Theme_Visual_Code_Vibe.svg',
-  'gaming':      '/assets/img/Theme_Gaming/Theme_Visual_Gaming.svg',
-  'da-projects': '/assets/img/Theme_DA/Theme_Visual_DA_Projects.svg',
-  'foods':       '/assets/img/Theme_Food/Theme_Visual_Food.svg',
+  'code-vibes':  '/Memory/assets/img/Theme_Code_Vibes/Theme_Visual_Code_Vibe.svg',
+  'gaming':      '/Memory/assets/img/Theme_Gaming/Theme_Visual_Gaming.svg',
+  'da-projects': '/Memory/assets/img/Theme_DA/Theme_Visual_DA_Projects.svg',
+  'foods':       '/Memory/assets/img/Theme_Food/Theme_Visual_Food.svg',
 };
 
 /** Returns the asset path for the given theme's preview visual. */
@@ -58,20 +58,20 @@ export function themeVisualPath(theme: Theme): string {
 }
 
 function iconPalette(): string {
-  return `<img src="/assets/img/icons/icon-palette.svg" width="32" height="32" alt="" aria-hidden="true">`;
+  return `<img src="/Memory/assets/img/icons/icon-palette.svg" width="32" height="32" alt="" aria-hidden="true">`;
 }
 
 function iconPlayer(): string {
-  return `<img src="/assets/img/icons/icon-chess-pawn.svg" width="32" height="32" alt="" aria-hidden="true">`;
+  return `<img src="/Memory/assets/img/icons/icon-chess-pawn.svg" width="32" height="32" alt="" aria-hidden="true">`;
 }
 
 function iconGrid(): string {
-  return `<img src="/assets/img/icons/icon-style.svg" width="32" height="32" alt="" aria-hidden="true">`;
+  return `<img src="/Memory/assets/img/icons/icon-style.svg" width="32" height="32" alt="" aria-hidden="true">`;
 }
 
-function radioOption(name: string, value: string, label: string, checked: boolean): string {
+function radioOption(name: string, value: string, label: string, checked: boolean, hoverable = false): string {
   return `
-    <label class="settings__option">
+    <label class="settings__option${hoverable ? ' settings__option--hoverable' : ''}">
       <input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''}>
       <span class="settings__radio-dot"></span>
       <span class="settings__option-text" data-text="${label}">${label}</span>
@@ -93,27 +93,25 @@ function settingsGroup(icon: string, title: string, options: string): string {
 function themeOptions(s: AppState): string {
   const t = s.selectedTheme;
   return [
-    radioOption('theme', 'code-vibes',   'Code vibes theme',  t === 'code-vibes'),
-    radioOption('theme', 'gaming',        'Gaming theme',      t === 'gaming'),
-    radioOption('theme', 'da-projects',   'DA Projects theme', t === 'da-projects'),
-    radioOption('theme', 'foods',         'Foods theme',       t === 'foods'),
+    radioOption('theme', 'code-vibes',   'Code vibes theme',  t === 'code-vibes',  true),
+    radioOption('theme', 'gaming',        'Gaming theme',      t === 'gaming',       true),
+    radioOption('theme', 'da-projects',   'DA Projects theme', t === 'da-projects',  true),
+    radioOption('theme', 'foods',         'Foods theme',       t === 'foods',        true),
   ].join('');
 }
 
 function playerOptions(s: AppState): string {
-  const p = s.startPlayer;
   return [
-    radioOption('player', 'blue',   'Blue',   p === 'blue'),
-    radioOption('player', 'orange', 'Orange', p === 'orange'),
+    radioOption('player', 'blue',   'Blue',   s.startPlayer === 'blue'),
+    radioOption('player', 'orange', 'Orange', s.startPlayer === 'orange'),
   ].join('');
 }
 
 function boardOptions(s: AppState): string {
-  const b = s.boardSize;
   return [
-    radioOption('board-size', '16', '16 cards', b === 16),
-    radioOption('board-size', '24', '24 cards', b === 24),
-    radioOption('board-size', '36', '36 cards', b === 36),
+    radioOption('board-size', '16', '16 cards', s.boardSize === 16),
+    radioOption('board-size', '24', '24 cards', s.boardSize === 24),
+    radioOption('board-size', '36', '36 cards', s.boardSize === 36),
   ].join('');
 }
 
@@ -140,10 +138,14 @@ const THEME_NAMES: Record<Theme, string> = {
 };
 
 /** Returns the summary bar labels matching the Figma design. */
-export function settingsSummary(_s: AppState): string {
+export function settingsSummary(s: AppState): string {
   const sep = '<span class="settings__summary-sep" aria-hidden="true"></span>';
-  const items = ['Game theme', 'Player', 'Board size'];
-  return items.map(t => `<span class="settings__summary-item">${t}</span>`).join(sep);
+  const theme  = THEME_NAMES[s.selectedTheme] + ' theme';
+  const player = s.startPlayer ? `${s.startPlayer.charAt(0).toUpperCase() + s.startPlayer.slice(1)} Player` : 'Player';
+  const board  = s.boardSize   ? `Board-${s.boardSize} Cards` : 'Board size';
+  const item = (t: string, active: boolean) =>
+    `<span class="settings__summary-item${active ? '' : ' settings__summary-item--placeholder'}">${t}</span>`;
+  return [item(theme, true), sep, item(player, !!s.startPlayer), sep, item(board, !!s.boardSize)].join('');
 }
 
 function svgStart(): string {
@@ -157,7 +159,7 @@ function settingsRight(s: AppState): string {
            src="${themeVisualPath(s.selectedTheme)}" alt="${s.selectedTheme} theme preview">
       <div class="settings__actionbar">
         <div id="settings-summary" class="settings__summary">${settingsSummary(s)}</div>
-        <button class="settings__start-btn" id="start-button">${svgStart()} Start</button>
+        <button class="settings__start-btn" id="start-button"${s.startPlayer && s.boardSize ? '' : ' disabled'}>${svgStart()} Start</button>
       </div>
     </div>`;
 }
@@ -176,18 +178,19 @@ export function settingsScreen(s: AppState): string {
 
 // ── Game ──────────────────────────────────────────────────────────────────────
 
+function playerIcon(player: 'blue' | 'orange', id?: string): string {
+  const dataAttr = id ? ` data-player="${player}"` : '';
+  return `<span${id ? ` id="${id}"` : ''}${dataAttr} class="game__player-icon game__player-icon--${player}" role="img" aria-label="${player} player"></span>`;
+}
+
 function scoreBadges(): string {
   return `
-    <span class="game__badge game__badge--blue">Blue</span>
-    <span id="score-blue" class="game__score">0</span>
-    <span class="game__badge game__badge--orange">Orange</span>
-    <span id="score-orange" class="game__score">0</span>`;
+    ${playerIcon('blue')} <span class="game__player-label">Blue</span> <span id="score-blue" class="game__score">0</span>
+    ${playerIcon('orange')} <span class="game__player-label">Orange</span> <span id="score-orange" class="game__score">0</span>`;
 }
 
 function currentPlayerBadge(s: AppState): string {
-  const p = s.currentPlayer;
-  const label = p.charAt(0).toUpperCase() + p.slice(1);
-  return `<span id="current-player" class="game__badge game__badge--${p}">${label}</span>`;
+  return playerIcon(s.currentPlayer, 'current-player');
 }
 
 function svgExit(): string {
@@ -288,11 +291,11 @@ export function gameoverScreen(s: AppState): string {
 /** Returns inner HTML for #endscreen when there is a winner. */
 export function winnerScreen(s: AppState): string {
   const p = s.scores.blue > s.scores.orange ? 'blue' : 'orange';
-  const label = p === 'blue' ? 'BLUE' : 'ORANGE';
+  const label = p === 'blue' ? 'Blue' : 'Orange';
   return `
     <div class="endscreen__content">
       <p class="endscreen__label">The winner is</p>
-      <p class="endscreen__winner endscreen__winner--${p}">${label} PLAYER</p>
+      <p class="endscreen__winner endscreen__winner--${p}">${label} Player</p>
       <div class="endscreen__icon endscreen__icon--${p}">${svgPawn()}</div>
       <button class="endscreen__btn" id="back-to-start">Back to start</button>
     </div>`;
@@ -302,9 +305,13 @@ export function winnerScreen(s: AppState): string {
 export function drawScreen(): string {
   return `
     <div class="endscreen__content">
-      <p class="endscreen__draw-label">It's a</p>
-      <h1 class="endscreen__draw">DRAW</h1>
-      <div class="endscreen__icon">${svgScales()}</div>
+      <div class="endscreen__draw-group">
+        <p class="endscreen__draw-label">It's a</p>
+        <h1 class="endscreen__draw">DRAW</h1>
+      </div>
+      <div class="endscreen__icon">
+        <img src="/Memory/assets/img/icons/Draw.svg" alt="Draw" class="endscreen__draw-icon">
+      </div>
       <button class="endscreen__btn" id="back-to-start">Back to start</button>
     </div>`;
 }

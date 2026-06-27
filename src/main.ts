@@ -126,11 +126,14 @@ function handleSettingsChange(event: Event): void {
   if (input.name === 'player')     state.startPlayer   = input.value as Player;
   if (input.name === 'board-size') state.boardSize     = Number(input.value) as BoardSize;
   updateSettingsPreview();
+  const btn = document.getElementById('start-button') as HTMLButtonElement | null;
+  if (btn) btn.disabled = !(state.startPlayer && state.boardSize);
 }
 
 /** Applies theme and starts the game when the start button is clicked. */
 function handleSettingsClick(event: Event): void {
   if (!(event.target as HTMLElement).closest('#start-button')) return;
+  if (!state.startPlayer || !state.boardSize) return;
   setTheme(state.selectedTheme);
   navigateToGame();
 }
@@ -157,10 +160,38 @@ function handleEndscreenClick(event: Event): void {
 setTheme(state.selectedTheme);
 renderHome();
 
+// Dev shortcut: #[theme]-winner-blue | #[theme]-winner-orange | #[theme]-draw
+// theme = gaming | code-vibes | da-projects | foods (default: gaming)
+if (import.meta.env.DEV && window.location.hash) {
+  const h = window.location.hash.slice(1);
+  const themes = ['gaming', 'code-vibes', 'da-projects', 'foods'] as const;
+  const theme = (themes.find(t => h.startsWith(t)) ?? 'gaming') as Theme;
+  const screen = h.replace(theme + '-', '');
+  setTheme(theme);
+  state.selectedTheme = theme;
+  state.boardSize = 16;
+  state.startPlayer = 'blue';
+  state.currentPlayer = 'blue';
+  if (screen === 'winner-blue')   { state.scores = { blue: 5, orange: 3 }; showEndscreen(); }
+  if (screen === 'winner-orange') { state.scores = { blue: 3, orange: 5 }; showEndscreen(); }
+  if (screen === 'draw')          { state.scores = { blue: 4, orange: 4 }; showEndscreen(); }
+}
+
+function handleThemeHover(event: MouseEvent): void {
+  const img = document.getElementById('settings-preview-img') as HTMLImageElement | null;
+  if (!img) return;
+  const label = (event.target as HTMLElement).closest<HTMLElement>('label.settings__option');
+  const input = label?.querySelector<HTMLInputElement>('input[name="theme"]');
+  img.src = input ? themeVisualPath(input.value as Theme) : themeVisualPath(state.selectedTheme);
+}
+
 // Event Listeners
 document.getElementById('home')?.addEventListener('click', handleHomeClick);
-document.getElementById('settings')?.addEventListener('change', handleSettingsChange);
-document.getElementById('settings')?.addEventListener('click', handleSettingsClick);
+const settingsEl = document.getElementById('settings');
+settingsEl?.addEventListener('change', handleSettingsChange);
+settingsEl?.addEventListener('click', handleSettingsClick);
+settingsEl?.addEventListener('mouseover', handleThemeHover);
+settingsEl?.addEventListener('mouseout',  handleThemeHover);
 document.getElementById('game')?.addEventListener('click', handleGameClick);
 document.getElementById('endscreen')?.addEventListener('click', handleEndscreenClick);
 document.addEventListener('game:over', () => {

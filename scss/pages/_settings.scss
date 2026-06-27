@@ -100,8 +100,9 @@
   display: flex;
   align-items: center;
   gap: a.px-to-rem(10);
-  cursor: pointer;
   user-select: none;
+
+  &--hoverable { cursor: pointer; }
 
   input[type='radio'] {
     position: absolute;
@@ -110,7 +111,9 @@
     height: 0;
   }
 
-  &:has(input:checked) {
+  &:not(&--hoverable):has(input:checked),
+  .settings__options:not(:hover) &--hoverable:has(input:checked),
+  &--hoverable:hover {
     .settings__radio-dot {
       background: radial-gradient(circle, a.$color-primary-dark 38%, transparent 38%);
     }
@@ -230,7 +233,17 @@
   cursor: pointer;
   transition: opacity 0.2s ease;
 
-  &:hover { opacity: 0.85; }
+  &:hover:not(:disabled) { opacity: 0.85; }
+
+  &:disabled {
+    background-color: #d0d0d0;
+    color: #888;
+    cursor: default;
+  }
+}
+
+.settings__summary-item--placeholder {
+  opacity: 0.4;
 }
 
 .settings__start-icon {

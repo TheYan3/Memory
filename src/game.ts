@@ -33,15 +33,15 @@ function resetGameState(): void {
   flipped       = [];
   locked        = false;
   matchedPairs  = 0;
-  totalPairs    = state.boardSize / 2;
-  state.currentPlayer = state.startPlayer;
+  totalPairs    = state.boardSize! / 2;
+  state.currentPlayer = state.startPlayer!;
   state.scores        = { blue: 0, orange: 0 };
 }
 
 /** Renders the game HTML into #game and resets all game-session state. */
 export function initGame(): void {
   const assets = THEME_ASSETS[state.selectedTheme];
-  const deck   = buildDeck(assets.motifs, state.boardSize);
+  const deck   = buildDeck(assets.motifs, state.boardSize!);
   resetGameState();
   const el = document.getElementById('game');
   if (el) el.innerHTML = gameScreen(state, deck);
@@ -55,9 +55,9 @@ export function updateGameUI(): void {
   if (scoreBlue)   scoreBlue.textContent   = String(state.scores.blue);
   if (scoreOrange) scoreOrange.textContent = String(state.scores.orange);
   if (badge) {
-    const p = state.currentPlayer;
-    badge.className   = `game__badge game__badge--${p}`;
-    badge.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+    badge.classList.toggle('game__player-icon--blue',   state.currentPlayer === 'blue');
+    badge.classList.toggle('game__player-icon--orange', state.currentPlayer === 'orange');
+    (badge as HTMLElement).dataset.player = state.currentPlayer;
   }
 }
 

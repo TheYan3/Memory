@@ -20,15 +20,40 @@
   --theme-score-blue-color:     #{a.$color-white};
   --theme-score-orange-color:   #{a.$color-white};
 
-  // Exit button — teal gefüllt (Figma: secondary button fill)
-  --theme-exit-btn-bg:    #{a.$color-accent-code-vibes};
-  --theme-exit-btn-color: #{a.$color-white};
+  // Modal
+  --theme-modal-width:      #{a.px-to-rem(459)};
+  --theme-modal-radius:     0;
+  --theme-modal-btn-radius: 0;
+
+  // Exit button — dark fill, teal border, rounded (Figma)
+  --theme-exit-btn-bg:     rgba(77, 213, 188, 0.10);
+  --theme-exit-btn-border: 2px solid #{a.$color-accent-code-vibes};
+  --theme-exit-btn-radius: 0;
+  --theme-exit-btn-color:  #{a.$color-white};
 
   // Cards
   --theme-accent:         #{a.$color-accent-code-vibes};
-  --theme-card-back:      url('/assets/img/Theme_Code_Vibes/Face_green.svg');
+  --theme-card-back:      url('/Memory/assets/img/Theme_Code_Vibes/Face_green.svg');
   --theme-card-face-bg:   #{a.$color-accent-code-vibes};
   --theme-card-motif-bg:  #E8F3F0;
+
+  // Endscreen — 3D extrusion + weißer Highlight-Schatten oben-links
+  --theme-draw-shadow:
+    -2px -2px 0 rgba(255, 255, 255, 0.92),
+    0 0 #{a.px-to-rem(20)} var(--theme-accent);
+
+  // Endscreen — chess pawn icons für Winner
+  --theme-endscreen-icon-blue:   url('/Memory/assets/img/icons/chess_pawn%20(blue).svg');
+  --theme-endscreen-icon-orange: url('/Memory/assets/img/icons/chess_pawn%20(orange).svg');
+
+  .endscreen__icon--blue svg,
+  .endscreen__icon--orange svg { display: none; }
+
+  // Endscreen — Button mit Teal-Border, dunklem BG, scharfen Ecken
+  --theme-endscreen-btn-bg:     #2A3A36;
+  --theme-endscreen-btn-color:  #{a.$color-white};
+  --theme-endscreen-btn-border: 2px solid #{a.$color-accent-code-vibes};
+  --theme-endscreen-btn-radius: 0;
 
   // Glow / decorative
   --home-headline-glow:   0 0 40px rgba(77, 213, 188, 0.55), 0 0 100px rgba(77, 213, 188, 0.2);

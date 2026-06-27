@@ -71,16 +71,19 @@
   font-size: a.px-to-rem(22);
   font-weight: 700;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: transform 0.2s ease;
 
   &:hover {
-    opacity: 0.85;
+    transform: scale(1.07);
+
+    .home__button__icon { transform: rotate(15deg); }
   }
 
   &__icon {
     width: a.px-to-rem(26);
     height: a.px-to-rem(26);
     flex-shrink: 0;
+    transition: transform 0.2s ease;
   }
 }
 
